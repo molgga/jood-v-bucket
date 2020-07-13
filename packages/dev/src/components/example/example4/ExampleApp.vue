@@ -4,8 +4,7 @@
       <template #title>JdBucketSelectionIndicate 커스텀</template>
       <template #description>
         - #drag: 드래그 중인 아이템 UI 슬롯
-        <br />
-        - #range: JdBucketContainer 의 영역 선택 UI 슬롯
+        <br />- #range: JdBucketContainer 의 영역 선택 UI 슬롯
       </template>
     </example-intro>
 
@@ -42,11 +41,10 @@
         >
           <jd-bucket-item
             v-for="(item, index) in receiverA1.list"
-            :key="keyUidHelper(receiverA1.list, index)"
+            :key="keyUidHelper(receiverA1.list, index, item.id)"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -61,11 +59,10 @@
         >
           <jd-bucket-item
             v-for="(item, index) in receiverA2.list"
-            :key="keyUidHelper(receiverA2.list, index)"
+            :key="keyUidHelper(receiverA2.list, index, item.id)"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -76,8 +73,7 @@
             :key="item.id"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
     </div>

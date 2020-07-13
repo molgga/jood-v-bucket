@@ -8,10 +8,10 @@ export function createUid() {
     .join('');
 }
 
-export function keyUidHelper(vList: any, index: any) {
+export function keyUidHelper(vList: any, index: any, id: any) {
   let uid: any;
   try {
-    uid = index + '_' + vList[index].__ob__.dep.id;
+    uid = index + '_' + vList[index].__ob__.dep.id + '_' + id;
   } catch (err) {
     uid = createUid();
   }
