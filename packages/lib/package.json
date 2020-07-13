@@ -1,9 +1,16 @@
 {
   "name": "@jood/v-bucket",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "dist/v-bucket.common.js",
   "typings": "dist/types/index.d.ts",
   "module": "src/index.ts",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/molgga/jood-v-bucket.git"
@@ -13,11 +20,6 @@
     "email": "molgga84@gmail.com"
   },
   "homepage": "https://molgga.github.io/jood-v-bucket",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org",
-    "access": "public",
-    "directory": "dist"
-  },
   "scripts": {
     "lint": "vue-cli-service lint",
     "build": "npx vue-cli-service build --mode production --target lib ./src/index.ts",
