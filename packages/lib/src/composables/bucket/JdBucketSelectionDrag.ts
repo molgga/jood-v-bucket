@@ -29,8 +29,8 @@ export class JdBucketSelectionDrag {
    */
   handleSelectionMove = (evt: MouseEvent) => {
     evt.preventDefault();
-    this.moveX = evt.pageX;
-    this.moveY = evt.pageY;
+    this.moveX = evt.x;
+    this.moveY = evt.y;
     this.updateBoundary();
   };
 
