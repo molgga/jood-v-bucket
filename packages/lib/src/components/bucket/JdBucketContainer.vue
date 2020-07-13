@@ -1,5 +1,5 @@
 <template>
-  <div class="jd-bucket-container">
+  <div class="jd-bucket-container" :class="classes">
     <slot name="header"></slot>
     <slot name="indicate" :state="indicateState">
       <jd-bucket-container-indicate
@@ -105,6 +105,10 @@ export default defineComponent({
       default: () => ({
         animation: 200
       })
+    },
+    useGhostBar: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, context) {
@@ -128,12 +132,19 @@ export default defineComponent({
       isDraggingMe: false,
       isForceDisabled: false
     });
-
     const indicateState = reactive({
       isBlock: false,
       isInsertable: false,
       isEnter: false,
       isEmpty: !containerRef.getList().length
+    });
+
+    const classes = computed(() => {
+      console.log('classes');
+      return {
+        'use-ghost-bar': props.useGhostBar,
+        'is-insertable': indicateState.isInsertable
+      };
     });
 
     const allowRangeSelection = computed(() => {
@@ -158,6 +169,7 @@ export default defineComponent({
       return {
         forceFallback: bucketFallback && !props.receiver,
         ghostClass: '__jd-bucket-ghost',
+        chosenClass: '__jd-bucket-chosen',
         fallbackClass: '__jd-bucket-fallback',
         ...props.dragOptions
       };
@@ -295,6 +307,7 @@ export default defineComponent({
 
     return {
       state,
+      classes,
       elDragEl,
       safeDragOptions,
       indicateState,
@@ -333,6 +346,59 @@ export default defineComponent({
   .bucket-draggable {
     min-height: 10px;
     height: 100%;
+  }
+
+  &.use-ghost-bar.is-insertable {
+    ::v-deep .__jd-bucket-ghost {
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+      margin: 10px -10px;
+      height: 20px;
+      min-height: initial;
+      border: none;
+      border-radius: 0;
+      opacity: 1;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ffffff;
+        z-index: 990;
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        margin-top: -2px;
+        width: 100%;
+        height: 4px;
+        border-radius: 2px;
+        background-color: rgba(255, 38, 38, 1);
+        animation: ghost-bar-ripple 360ms linear;
+        animation-iteration-count: infinite;
+        z-index: 1000;
+      }
+    }
+  }
+}
+
+@keyframes ghost-bar-ripple {
+  0% {
+    opacity: 0.7;
+    transform: scale(1, 1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.95, 0.95);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1, 1);
   }
 }
 </style>
