@@ -4,10 +4,8 @@
       <template #title>JdBucketSelectionIndicate 커스텀</template>
       <template #description>
         - #drag: 드래그 중인 아이템 UI 슬롯, drag 스코프의 데이터 예.
-        <br />
-        JdBucketItemRef 에서 연결된 model 이나 DOM 에 접근 가능.
-        <br />
-        (DOM 을 clone 하여 미리보기 할 수 도 있으나, DOM 의 위치가 달라지기 때문에 CSS tree
+        <br />JdBucketItemRef 에서 연결된 model 이나 DOM 에 접근 가능.
+        <br />(DOM 을 clone 하여 미리보기 할 수 도 있으나, DOM 의 위치가 달라지기 때문에 CSS tree
         (class/style)는 보장할 수 없음)
       </template>
     </example-intro>
@@ -31,11 +29,10 @@
         >
           <jd-bucket-item
             v-for="(item, index) in receiverA1.list"
-            :key="keyUidHelper(receiverA1.list, index)"
+            :key="keyUidHelper(receiverA1.list, index, item.id)"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -50,11 +47,10 @@
         >
           <jd-bucket-item
             v-for="(item, index) in receiverA2.list"
-            :key="keyUidHelper(receiverA2.list, index)"
+            :key="keyUidHelper(receiverA2.list, index, item.id)"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -65,8 +61,7 @@
             :key="item.id"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
     </div>

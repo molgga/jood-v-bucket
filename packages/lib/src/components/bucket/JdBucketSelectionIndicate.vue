@@ -79,8 +79,8 @@ export default defineComponent({
 
       const { sortableEvent, fromContainer } = evt;
       const { originalEvent } = sortableEvent;
-      const top = originalEvent.pageY;
-      const left = originalEvent.pageX;
+      const top = originalEvent.y;
+      const left = originalEvent.x;
       const dragCount = fromContainer.getDragItems().length || 0;
       const dragItemRefs = fromContainer.getDragItems();
       dragState.visible = true;

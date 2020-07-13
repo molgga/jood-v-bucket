@@ -1,5 +1,10 @@
 <template>
   <div>
+    <example-intro>
+      <template #title>JdBucketContainer 의 useGhostBar 예</template>
+      <template #description>draggable 에서 사용되는 css 를 강제 치환함.</template>
+    </example-intro>
+
     <jd-bucket-selection-indicate />
 
     <div class="exm-wrap">
@@ -11,10 +16,11 @@
           :receiver="true"
           :max="-1"
           :lazyChangeStateDelay="100"
+          :useGhostBar="true"
         >
           <custom-bucket-item
             v-for="(item, index) in receiverA1.list"
-            :key="keyUidHelper(receiverA1.list, item.id)"
+            :key="keyUidHelper(receiverA1.list, index, item.id)"
             :model="item"
             :myIndex="index + 1"
           >
@@ -31,10 +37,11 @@
           :receiver="true"
           :max="-1"
           :lazyChangeStateDelay="100"
+          :useGhostBar="true"
         >
           <custom-bucket-item
             v-for="(item, index) in receiverA2.list"
-            :key="keyUidHelper(receiverA2.list, index)"
+            :key="keyUidHelper(receiverA2.list, index, item.id)"
             :model="item"
             :myIndex="index + 1"
           >
@@ -81,6 +88,7 @@ import {
   JdBucketContainer,
   JdBucketItem
 } from '@/lib-package';
+import ExampleIntro from '@/components/sample/ExampleIntro.vue';
 import { keyUidHelper, createTestList } from '@/components/sample/utils';
 import CustomBucketItem from './CustomBucketItem.vue';
 
@@ -89,7 +97,8 @@ export default defineComponent({
     JdBucketSelectionIndicate,
     JdBucketContainer,
     JdBucketItem,
-    CustomBucketItem
+    CustomBucketItem,
+    ExampleIntro
   },
   setup() {
     provideJdBucketRef();

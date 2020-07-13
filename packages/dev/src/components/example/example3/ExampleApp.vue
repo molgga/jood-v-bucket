@@ -4,10 +4,8 @@
       <template #title>JdBucketContainer #indicate 커스텀</template>
       <template #description>
         - isBlock: 해당 컨테이너에 드랍 불가
-        <br />
-        - isInsertable: 해당 컨테이너에 드랍 가능
-        <br />
-        - isEmpty: 해당 컨테이너가 비어있음
+        <br />- isInsertable: 해당 컨테이너에 드랍 가능
+        <br />- isEmpty: 해당 컨테이너가 비어있음
       </template>
     </example-intro>
 
@@ -34,11 +32,10 @@
 
           <jd-bucket-item
             v-for="(item, index) in receiverA1.list"
-            :key="keyUidHelper(receiverA1.list, index)"
+            :key="keyUidHelper(receiverA1.list, index, item.id)"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -61,11 +58,10 @@
 
           <jd-bucket-item
             v-for="(item, index) in receiverA2.list"
-            :key="keyUidHelper(receiverA2.list, index)"
+            :key="keyUidHelper(receiverA2.list, index, item.id)"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -76,8 +72,7 @@
             :key="item.id"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
     </div>

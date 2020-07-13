@@ -19,7 +19,7 @@
         >
           <custom-bucket-item
             v-for="(item, index) in receiverA1.list"
-            :key="keyUidHelper(receiverA1.list, index)"
+            :key="keyUidHelper(receiverA1.list, index, item.id)"
             :model="item"
             :myIndex="index + 1"
           >

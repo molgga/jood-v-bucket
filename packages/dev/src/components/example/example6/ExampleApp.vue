@@ -2,9 +2,7 @@
   <div>
     <example-intro>
       <template #title>JdBucketContainer 커스텀</template>
-      <template #description>
-        - #header: 컨테이너의 header 영역 슬롯과 기능 추가 예.
-      </template>
+      <template #description>- #header: 컨테이너의 header 영역 슬롯과 기능 추가 예.</template>
     </example-intro>
 
     <jd-bucket-selection-indicate />
@@ -24,7 +22,7 @@
           </template>
           <custom-bucket-item
             v-for="(item, index) in receiverA1.list"
-            :key="keyUidHelper(receiverA1.list, index)"
+            :key="keyUidHelper(receiverA1.list, index, item.id)"
             :model="item"
             :myIndex="index + 1"
           >
@@ -47,7 +45,7 @@
           </template>
           <custom-bucket-item
             v-for="(item, index) in receiverA2.list"
-            :key="keyUidHelper(receiverA2.list, index)"
+            :key="keyUidHelper(receiverA2.list, index, item.id)"
             :model="item"
             :myIndex="index + 1"
           >
@@ -67,8 +65,7 @@
             :key="item.id"
             :model="item"
             class="test-item"
-            >{{ item }}</jd-bucket-item
-          >
+          >{{ item }}</jd-bucket-item>
         </jd-bucket-container>
       </div>
     </div>
