@@ -1,11 +1,21 @@
 {
   "name": "@jood/v-bucket",
   "version": "0.1.0",
-  "private": true,
   "main": "dist/v-bucket.common.js",
   "typings": "dist/types/index.d.ts",
   "module": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/molgga/jood-v-bucket.git"
+  },
+  "bugs": {
+    "url": "https://github.com/molgga/jood-v-bucket/issues",
+    "email": "molgga84@gmail.com"
+  },
+  "homepage": "https://molgga.github.io/jood-v-bucket",
   "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
     "directory": "dist"
   },
   "scripts": {

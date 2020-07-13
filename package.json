@@ -9,7 +9,7 @@
     "bootstrap": "yarn install --production=false",
     "generate": "yarn workspace @jood/v-bucket generate",
     "doc": "jsdoc -c jsdoc.json -r -d docs",
-    "ci:generate": "npm run generate",
+    "ci:build": "npm run generate",
     "ci:doc": "npm run doc"
   }
 }
