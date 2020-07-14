@@ -23,6 +23,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': ['off'],
     '@typescript-eslint/no-inferrable-types': ['off']
   },
+  ignorePatterns: ['**/*.spec.ts'],
   overrides: [
     {
       files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
