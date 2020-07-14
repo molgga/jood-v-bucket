@@ -38,6 +38,7 @@ export interface BucketRangeSelectionState {
 export interface IBucketRef {
   readonly isFallbackIndicate: boolean;
   setFallbackIndicate(is: boolean): void;
+  getContainerRefs(): Map<string, IBucketContainerRef>;
   observeDragger(): Observable<BucketEvent>;
   observeRangeSelection(): Observable<BucketRangeSelectionEvent>;
   dispatchDragChoose(params: BucketDragChoose): void;
@@ -224,4 +225,14 @@ export interface BucketRangeSelectionEvent {
   x: number;
   y: number;
   container: IBucketContainerRef;
+}
+
+/**
+ * @export
+ * @interface BucketDropBeforeParams
+ */
+export interface BucketDropBeforeParams {
+  fromContainer: IBucketContainerRef;
+  toContainer: IBucketContainerRef;
+  itemRefs: IBucketItemRef[];
 }

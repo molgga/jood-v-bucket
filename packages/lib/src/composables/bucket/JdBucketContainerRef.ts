@@ -4,10 +4,17 @@ import {
   IBucketContainerRef,
   IBucketItemRef,
   SelectionBoundary,
-  BucketCloneModel
+  BucketCloneModel,
+  BucketDropBeforeParams
 } from './types';
 import { createUid, isIntersect } from '../../utils';
 import { JdBucketSelectionRange } from './JdBucketSelectionRange';
+
+/**
+ *
+ */
+type BucketDropBeforeCallback = (params: BucketDropBeforeParams) => any;
+type BucketDropBeforeEmiiter = (params: { changeList: any[] }) => any;
 
 /**
  * 한개의 버킷 컨테이너.
@@ -33,7 +40,7 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
   protected bucketIsReceiver: boolean = false;
   protected bucketIsMultiple: boolean = false;
   protected elDragContainer: Element | null = null;
-  protected hookDropBefore: Function | null = null;
+  protected hookDropBefore: BucketDropBeforeCallback | null = null;
   protected dragItemRefs: IBucketItemRef[] = [];
   protected subjectDropped: Subject<BucketDragDrop> = new Subject();
   protected subjectChangeState: Subject<IBucketContainerRef> = new Subject();
@@ -103,9 +110,9 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
   /**
    * 지정한 hookDropBefore 함수.
    * @readonly
-   * @type {(Function | null)}
+   * @type {(BucketDropBeforeCallback | null)}
    */
-  get onDropBefore(): Function | null {
+  get onDropBefore(): BucketDropBeforeCallback | null {
     return this.hookDropBefore;
   }
 
@@ -177,9 +184,9 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
   /**
    * sender 컨테이너에서 receiver 컨테이너로 드랍을 하고,
    * list 를 merge 하기 직전 실행될 (validate, filter ... 를 직접 할) 함수 지정.
-   * @param {Function} handle
+   * @param {BucketDropBeforeCallback} handle
    */
-  setDropBefore(handle: Function): void {
+  setDropBefore(handle: BucketDropBeforeCallback): void {
     this.hookDropBefore = handle;
   }
 
@@ -297,6 +304,9 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
    * @param {IBucketItemRef} itemRef
    */
   setDragItem(itemRef: IBucketItemRef): void {
+    this.dragItemRefs.forEach(itemRef => {
+      itemRef.setSelected(false);
+    });
     this.dragItemRefs = [itemRef];
     itemRef.setSelected(true);
     this.dispatchChangeState();
@@ -448,15 +458,15 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
    * list 가 변경된 상태를 UI 단에서 알아야하는 경우 콜백을 해준다.
    * @param {number} insertIndex
    * @param {IBucketContainerRef} fromContainer
-   * @param {Function} [fnEmitter]
+   * @param {BucketDropBeforeEmiiter} [fnEmitter]
    */
   async mergeToDrop(
     insertIndex: number,
     fromContainer: IBucketContainerRef,
-    fnEmitter?: Function
+    fnEmitter?: BucketDropBeforeEmiiter
   ): Promise<void> {
     if (!fromContainer) return;
-    const emitter = fnEmitter && fnEmitter.constructor === Function ? fnEmitter : () => {};
+    const emitter = fnEmitter && typeof fnEmitter === 'function' ? fnEmitter : () => {};
     const interceptDropBefore = this.onDropBefore || null;
     const dropItemRefs = fromContainer.getDragItems() || [];
     const dropList = dropItemRefs.map(item => item.model);
