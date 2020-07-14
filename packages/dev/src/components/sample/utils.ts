@@ -18,12 +18,12 @@ export function keyUidHelper(vList: any, index: any, id: any) {
   return uid;
 }
 
-export function createTestModel(id: number) {
-  return { id, type: '' };
+export function createTestModel(id: number, type?: string) {
+  return { id, type };
 }
 
-export function createTestList(len = 5) {
+export function createTestList(len = 5, type?: string) {
   return Array.from(Array(len)).map((item, index) => {
-    return createTestModel(index);
+    return createTestModel(index, type);
   });
 }
