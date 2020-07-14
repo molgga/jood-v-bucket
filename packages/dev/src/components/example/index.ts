@@ -7,7 +7,8 @@ export const ExampleApps = {
   '6': () => import('@/components/example/example6/ExampleApp.vue'),
   '7': () => import('@/components/example/example7/ExampleApp.vue'),
   '8': () => import('@/components/example/example8/ExampleApp.vue'),
-  '9': () => import('@/components/example/example9/ExampleApp.vue')
+  '9': () => import('@/components/example/example9/ExampleApp.vue'),
+  '10': () => import('@/components/example/example10/ExampleApp.vue')
 };
 
 export const exampleLinks = (() => {

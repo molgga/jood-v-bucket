@@ -51,8 +51,8 @@ script:
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
   - npm run ci:build
-  - npm run ci:doc
-#  - npm run travis:test
+#  - npm run ci:doc
+  - npm run ci:test
 
 branches:
   only:
@@ -61,7 +61,7 @@ branches:
 
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
-  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" #  test || coverage
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc
 
 deploy:
   # 배포 설정 - npm module

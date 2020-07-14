@@ -45,6 +45,15 @@ export class JdBucketRef implements IBucketRef {
   }
 
   /**
+   *
+   * 등록된 버킷 컨테이너 맵.
+   * @returns {Map<string, IBucketContainerRef>}
+   */
+  getContainerRefs(): Map<string, IBucketContainerRef> {
+    return this.containerRefMap;
+  }
+
+  /**
    * 옵저버: 드래그 상태
    * @returns {Observable<BucketEvent>}
    */

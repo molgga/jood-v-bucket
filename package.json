@@ -8,8 +8,10 @@
     "bootstrap:symlink": "cd ./packages/lib && yarn unlink && yarn link && cd ../../packages/dev && yarn unlink @jood/v-bucket && yarn link @jood/v-bucket && cd ../../",
     "bootstrap": "yarn install --production=false",
     "generate": "yarn workspace @jood/v-bucket generate",
+    "test": "yarn workspace @jood/v-bucket test",
     "doc": "jsdoc -c jsdoc.json -r -d docs",
     "ci:build": "npm run generate",
+    "ci:test": "npm run test",
     "ci:doc": "npm run doc"
   }
 }
