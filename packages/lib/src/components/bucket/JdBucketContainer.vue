@@ -265,8 +265,8 @@ export default defineComponent({
       if (state.isDragChoose) return;
       if (evt.which !== 1) return; // left-click
       bucketRef.dispatchRangeSelectionStart({
-        x: evt.pageX,
-        y: evt.pageY,
+        x: evt.x,
+        y: evt.y,
         container: containerRef
       });
     };
