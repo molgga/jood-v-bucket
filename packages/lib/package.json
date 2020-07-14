@@ -1,11 +1,10 @@
 {
   "name": "@jood/v-bucket",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "dist/v-bucket.common.js",
   "typings": "dist/types/index.d.ts",
   "module": "src/index.ts",
   "publishConfig": {
-    "directory": "dist",
     "registry": "https://registry.npmjs.org",
     "access": "public"
   },
