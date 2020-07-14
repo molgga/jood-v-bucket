@@ -21,7 +21,6 @@ import {
   SelectionBoundary,
   BucketRangeSelectionEvent,
   IBucketContainerRef,
-  IBucketItemRef,
   BucketDragSelectionState,
   BucketRangeSelectionState
 } from '../../composables/bucket';

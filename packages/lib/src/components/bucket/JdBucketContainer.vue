@@ -140,7 +140,6 @@ export default defineComponent({
     });
 
     const classes = computed(() => {
-      console.log('classes');
       return {
         'use-ghost-bar': props.useGhostBar,
         'is-insertable': indicateState.isInsertable
@@ -222,7 +221,7 @@ export default defineComponent({
 
     const onBucketDropped = async (evt: BucketDragDrop) => {
       if (!evt.fromContainer) return;
-      const { toContainer, fromContainer, sortableEvent } = evt;
+      const { fromContainer, sortableEvent } = evt;
       const insertIndex = sortableEvent.newIndex;
       containerRef.mergeToDrop(insertIndex, fromContainer, ({ changeList }: any) => {
         emit('change', changeList);
