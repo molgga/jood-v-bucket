@@ -1,8 +1,8 @@
 {
   "name": "@jood/v-bucket",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "main": "dist/v-bucket.common.js",
-  "typings": "dist/types/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "module": "src/index.ts",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
@@ -15,7 +15,7 @@
     "test": "jest --config ./jest.config.js",
     "lint": "vue-cli-service lint",
     "build": "npx vue-cli-service build --mode production --target lib ./src/index.ts",
-    "declaration": "tsc --p tsconfig.build.json",
+    "declaration": "tsc --p tsconfig.type.json",
     "generate": "npm run build && npm run declaration"
   },
   "peerDependencies": {

@@ -37,7 +37,7 @@
           v-model="receiverA2.list"
           :groupName="groupA"
           :receiver="true"
-          :max="10"
+          :max="3"
           :lazyChangeStateDelay="100"
         >
           <template #header>
@@ -114,7 +114,7 @@ export default defineComponent({
     };
     onMounted(() => {
       receiverA1.list = [];
-      receiverA2.list = createTestList(Math.floor(Math.random() * 5));
+      receiverA2.list = createTestList(Math.floor(Math.random() * 3));
       senderA1.list = createTestList(Math.ceil(Math.random() * 10 + 1));
     });
     return {

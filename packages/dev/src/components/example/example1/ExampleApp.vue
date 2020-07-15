@@ -10,9 +10,9 @@
         </div>
         <div>
           <strong>JdBucketContainer 한 개의 컨테이너</strong>
-          <br />- receiver: 아이템을 받는 역할. 자체 소팅/드랍시 filter훅/max 등 지원.
-          <br />- sender: 아이템을 전달해주는 역할. 멀티 셀렉트 등 지원.
-          <br />- groupName: receiver &lt;=== (groupName) === sender 동일한 그룹명간 전달 가능.
+          <br />- receiver: 아이템을 받는 역할. 자체 소팅/드랍시 filter훅/max 등 지원. <br />-
+          sender: 아이템을 전달해주는 역할. 멀티 셀렉트 등 지원. <br />- groupName: receiver &lt;===
+          (groupName) === sender 동일한 그룹명간 전달 가능.
         </div>
       </template>
     </example-intro>
@@ -34,7 +34,8 @@
             :key="keyUidHelper(receiverA1.list, index, item.id)"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -51,7 +52,8 @@
             :key="keyUidHelper(receiverA2.list, index, item.id)"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -62,7 +64,8 @@
             :key="item.id"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
 
@@ -80,7 +83,8 @@
             :key="keyUidHelper(receiverB1.list, index, item.id)"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -97,7 +101,8 @@
             :key="keyUidHelper(receiverB2.list, index, item.id)"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -108,7 +113,8 @@
             :key="item.id"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
     </div>
