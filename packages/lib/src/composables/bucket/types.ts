@@ -56,14 +56,14 @@ export interface IBucketRef {
  * @interface IBucketContainerRef
  */
 export interface IBucketContainerRef<TM = any> {
-  readonly groupName: string;
+  readonly groupName: BucketGroupNameType;
   readonly max: number;
   readonly isReceiver: boolean;
   readonly isMultiple: boolean;
   readonly isMaximum: boolean;
   readonly elContainer: Element | null;
   readonly onDropBefore: Function | null;
-  setGroupName(groupName: string): void;
+  setGroupName(groupName: BucketGroupNameType): void;
   setReceiver(is: boolean): void;
   setMultiple(is: boolean): void;
   setMax(max: number): void;
@@ -115,7 +115,7 @@ export interface IBucketItemRef<TM = any> {
   setElContainer(element: Element): void;
   setSelected(is: boolean): void;
   getUid(): string;
-  getElBound(): ClientRect | DOMRect | null;
+  getElBound(): BucketDOMRectBound | null;
   observeChangeState(): Observable<any>;
   dispatchChangeState(): void;
   destroy(): void;
@@ -236,3 +236,12 @@ export interface BucketDropBeforeParams {
   toContainer: IBucketContainerRef;
   itemRefs: IBucketItemRef[];
 }
+
+export interface BucketDOMRectBound {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export type BucketGroupNameType = number | string;

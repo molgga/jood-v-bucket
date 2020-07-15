@@ -1,7 +1,7 @@
 module.exports = {
   globals: {
     'ts-jest': {
-      tsConfig: './tsconfig.test.json',
+      tsConfig: '<rootDir>/tsconfig.test.json',
       diagnostics: false
     }
   },
@@ -10,21 +10,16 @@ module.exports = {
   verbose: true,
   setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest'
-    // '^.+\\.(ts|tsx)$': 'babel-jest'
+    // '^.+\\.(ts|tsx)$': 'ts-jest'
   },
-  transformIgnorePatterns: ['node_modules', '__snapshots__'],
-  testMatch: [
-    '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))',
-    '**/__tests__/**/(*.)+(spec|test).+(ts|tsx|js)'
-    // '**/?(*.)+(spec|test).+(ts|tsx|js)'
-  ],
+  transformIgnorePatterns: ['/node_modules/', '__snapshots__'],
+  testMatch: ['**/__tests__/**/(*.)+(spec|test).+(js|jsx|ts|tsx)'],
   testPathIgnorePatterns: ['/node_modules/', '/__snapshots__/'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
     '@/(.*)$': '<rootDir>/src/$1'
   }
+  // collectCoverage: true,
+  // coveragePathIgnorePatterns: ['/tests/'],
+  // coverageReporters: ['html']
 };
-// module.exports = {
-//   preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel'
-// };

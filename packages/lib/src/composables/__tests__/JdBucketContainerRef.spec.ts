@@ -21,6 +21,11 @@ describe('JdBucketContainerRef', () => {
     }
   });
 
+  test('getUid', () => {
+    expect(containerRef.getUid()).not.toBeNull();
+    expect(typeof containerRef.getUid()).toBe('string');
+  });
+
   test('member', () => {
     const list: any[] = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
     const fnDropBefore = () => {};
@@ -43,6 +48,45 @@ describe('JdBucketContainerRef', () => {
     expect(containerRef.onDropBefore).toBe(fnDropBefore);
   });
 
+  test('setGroupName', () => {
+    containerRef.setGroupName('abc');
+    expect(containerRef.groupName).toBe('abc');
+    containerRef.setGroupName(123);
+    expect(containerRef.groupName).toBe(123);
+  });
+
+  test('setReceiver', () => {
+    expect(containerRef.isReceiver).toBe(false);
+    containerRef.setReceiver(true);
+    expect(containerRef.isReceiver).toBe(true);
+    containerRef.setReceiver(false);
+    expect(containerRef.isReceiver).toBe(false);
+    containerRef.setReceiver(1 as any);
+    expect(containerRef.isReceiver).toBe(true);
+    containerRef.setReceiver('foo' as any);
+    expect(containerRef.isReceiver).toBe(true);
+    containerRef.setReceiver(0 as any);
+    expect(containerRef.isReceiver).toBe(false);
+    containerRef.setReceiver(null as any);
+    expect(containerRef.isReceiver).toBe(false);
+  });
+
+  test('setMultiple', () => {
+    expect(containerRef.isMultiple).toBe(false);
+    containerRef.setMultiple(true);
+    expect(containerRef.isMultiple).toBe(true);
+    containerRef.setMultiple(false);
+    expect(containerRef.isMultiple).toBe(false);
+    containerRef.setMultiple(1 as any);
+    expect(containerRef.isMultiple).toBe(true);
+    containerRef.setMultiple('foo' as any);
+    expect(containerRef.isMultiple).toBe(true);
+    containerRef.setMultiple(0 as any);
+    expect(containerRef.isMultiple).toBe(false);
+    containerRef.setMultiple(null as any);
+    expect(containerRef.isMultiple).toBe(false);
+  });
+
   test('setMax', () => {
     expect(containerRef.max).toBe(-1);
     containerRef.setMax(0);
@@ -53,8 +97,12 @@ describe('JdBucketContainerRef', () => {
     expect(containerRef.max).toBe(-1);
     containerRef.setMax(-999);
     expect(containerRef.max).toBe(-1);
+    containerRef.setMax(undefined);
+    expect(containerRef.max).toBe(-1);
+    containerRef.setMax('ABC' as any);
+    expect(containerRef.max).toBe(-1);
   });
-
+  
   test('isMaximum', () => {
     containerRef.setList([{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]);
     containerRef.setMax(6);
@@ -118,7 +166,6 @@ describe('JdBucketContainerRef', () => {
     const handler = jest.fn();
     const containerListener = containerRef.observeChangeState().subscribe(handler);
     containerRef.setLazyStateChangeDelay(10);
-
     containerRef.setGroupName('abc');
     containerRef.setList([{ id: 1 }]);
     containerRef.setMax(99);
@@ -126,6 +173,20 @@ describe('JdBucketContainerRef', () => {
     containerRef.setMultiple(false);
     await delay(50);
     expect(handler.mock.calls.length).toBe(1);
+    containerListener.unsubscribe();
+    jestDone();
+  });
+
+  test('observeChangeState, state change lazy 2', async jestDone => {
+    const handler = jest.fn();
+    const containerListener = containerRef.observeChangeState().subscribe(handler);
+    containerRef.setLazyStateChangeDelay(undefined as any);
+    containerRef.setGroupName('abc');
+    containerRef.setList([{ id: 1 }]);
+    containerRef.setMax(99);
+    containerRef.setReceiver(true);
+    containerRef.setMultiple(false);
+    expect(handler.mock.calls.length).toBe(5);
     containerListener.unsubscribe();
     jestDone();
   });
@@ -214,6 +275,27 @@ describe('JdBucketContainerRef', () => {
     expect(containerRef.getDragItems().length).toBe(1);
     expect(itemRef1.isSelected).toBe(true);
     expect(itemRef2.isSelected).toBe(false);
+  });
+
+  test('addDragItemToBoundary', () => {
+    const itemRef1 = new JdBucketItemRef();
+    const itemRef2 = new JdBucketItemRef();
+    const itemRef3 = new JdBucketItemRef();
+    containerRef.joinItemRef(itemRef1);
+    containerRef.joinItemRef(itemRef2);
+    containerRef.joinItemRef(itemRef3);
+    jest.spyOn(itemRef1, 'getElBound').mockImplementation(() => {
+      return { x: 0, y: 0, width: 50, height:50};
+    });
+    jest.spyOn(itemRef2, 'getElBound').mockImplementation(() => {
+      return { x: 99, y: 99, width: 50, height:50};
+    });
+    jest.spyOn(itemRef3, 'getElBound').mockImplementation(() => {
+      return { x: 101, y: 101, width: 50, height:50};
+    });
+    expect(containerRef.getDragItems().length).toBe(0);
+    containerRef.addDragItemToBoundary({ x:10, y: 10, w: 90, h: 90 });
+    expect(containerRef.getDragItems().length).toBe(2);
   });
 
   test('isGroupSame, isGroupInsertable', () => {

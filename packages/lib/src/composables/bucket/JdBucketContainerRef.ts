@@ -5,7 +5,9 @@ import {
   IBucketItemRef,
   SelectionBoundary,
   BucketCloneModel,
-  BucketDropBeforeParams
+  BucketDropBeforeParams,
+  BucketDOMRectBound,
+  BucketGroupNameType
 } from './types';
 import { createUid, isIntersect } from '../../utils';
 import { JdBucketSelectionRange } from './JdBucketSelectionRange';
@@ -35,7 +37,7 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
   protected uid: string = '';
   protected itemRefMap: Map<string, IBucketItemRef> = new Map();
   protected bucketList: TM[] = [];
-  protected bucketGroupName: string = '';
+  protected bucketGroupName: BucketGroupNameType = '';
   protected bucketMax: number = -1;
   protected bucketIsReceiver: boolean = false;
   protected bucketIsMultiple: boolean = false;
@@ -56,9 +58,9 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
   /**
    * 그룹명
    * @readonly
-   * @type {string}
+   * @type {BucketGroupNameType}
    */
-  get groupName(): string {
+  get groupName(): BucketGroupNameType {
     return this.bucketGroupName;
   }
 
@@ -118,9 +120,9 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
 
   /**
    * 그룹명 지정
-   * @param {string} groupName
+   * @param {BucketGroupNameType} groupName
    */
-  setGroupName(groupName: string) {
+  setGroupName(groupName: BucketGroupNameType) {
     this.bucketGroupName = groupName;
     this.dispatchChangeState();
   }
@@ -272,7 +274,7 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
     const boundX = { start: boundary.x, end: boundary.x + boundary.w };
     const boundY = { start: boundary.y, end: boundary.y + boundary.h };
     Array.from(itemRefs.values()).forEach(itemRef => {
-      const itemBound = itemRef.getElBound() as any;
+      const itemBound = itemRef.getElBound() as BucketDOMRectBound;
       const itemBoundX = { start: itemBound.x, end: itemBound.x + itemBound.width };
       const itemBoundY = { start: itemBound.y, end: itemBound.y + itemBound.height };
       const isHitX = isIntersect(boundX, itemBoundX);

@@ -1,5 +1,5 @@
 import { Subject, Observable } from 'rxjs';
-import { IBucketItemRef } from './types';
+import { IBucketItemRef, BucketDOMRectBound } from './types';
 import { createUid } from '../../utils';
 
 /**
@@ -80,11 +80,17 @@ export class JdBucketItemRef<TM = any> implements IBucketItemRef<TM> {
 
   /**
    * 해당 아이템의 DOM 의 bound 영역.
-   * @returns {(ClientRect | DOMRect | null)}
+   * @returns {DOMRectBound | null}
    */
-  getElBound(): ClientRect | DOMRect | null {
+  getElBound(): BucketDOMRectBound | null {
     if (!this.elContainer) return null;
-    return (this.elContainer as HTMLElement).getBoundingClientRect();
+    const rect = this.elContainer.getBoundingClientRect();
+    return {
+      x: rect.x || rect.left || 0,
+      y: rect.y || rect.top || 0,
+      width: rect.width || 0,
+      height: rect.height || 0
+    };
   }
 
   /**
