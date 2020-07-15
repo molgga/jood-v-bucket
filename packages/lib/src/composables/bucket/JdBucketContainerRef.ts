@@ -16,11 +16,11 @@ import { JdBucketSelectionRange } from './JdBucketSelectionRange';
  *
  */
 type BucketDropBeforeCallback = (params: BucketDropBeforeParams) => any;
-type BucketDropBeforeEmiiter = (params: { changeList: any[] }) => any;
+type BucketDropBeforeEmitter = (params: { changeList: any[] }) => any;
 
 /**
  * 한개의 버킷 컨테이너.
- * - 동일 그룹명으로만 모델 전송이 가능하다.
+ * - 동일 그룹명끼지 모델 전송이 가능하다.
  * - sender 역할의 컨테이너는 receiver 로 전달만 가능하고, 자체 소팅은 지원하지 않는다.
  * - receiver 역할의 컨테이너는 sender 로 부터 전달을 받을 수 있고, 자체 소팅을 지원한다.
  *
@@ -460,12 +460,12 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
    * list 가 변경된 상태를 UI 단에서 알아야하는 경우 콜백을 해준다.
    * @param {number} insertIndex
    * @param {IBucketContainerRef} fromContainer
-   * @param {BucketDropBeforeEmiiter} [fnEmitter]
+   * @param {BucketDropBeforeEmitter} [fnEmitter]
    */
   async mergeToDrop(
     insertIndex: number,
     fromContainer: IBucketContainerRef,
-    fnEmitter?: BucketDropBeforeEmiiter
+    fnEmitter?: BucketDropBeforeEmitter
   ): Promise<void> {
     if (!fromContainer) return;
     const emitter = fnEmitter && typeof fnEmitter === 'function' ? fnEmitter : () => {};

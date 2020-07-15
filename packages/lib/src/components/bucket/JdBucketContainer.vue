@@ -16,7 +16,7 @@
       @mouseleave="onContainerLeave"
     >
       <draggable
-        ref="elDragEl"
+        ref="elDrag"
         class="bucket-draggable"
         v-bind="safeDragOptions"
         :group="draggerState.group"
@@ -113,7 +113,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const { emit } = context;
-    const elDragEl = ref<any>(null); // sortable DOM 으로 다루는것 제어용
+    const elDrag = ref<any>(null); // sortable DOM 으로 다루는것 제어용
     const bucketRef = useJdBucketRef();
     const containerRef = provideJdBucketContainerRef();
     containerRef.setGroupName(props.groupName || '');
@@ -288,8 +288,8 @@ export default defineComponent({
     );
 
     onMounted(() => {
-      if (elDragEl.value) {
-        containerRef.setElContainer(elDragEl.value.$el);
+      if (elDrag.value) {
+        containerRef.setElContainer(elDrag.value.$el);
       }
       bucketRef.joinContainerRef(containerRef);
       const observe1 = bucketRef.observeDragger().subscribe(onBucketEvent);
@@ -307,7 +307,7 @@ export default defineComponent({
     return {
       state,
       classes,
-      elDragEl,
+      elDrag,
       safeDragOptions,
       indicateState,
       draggerState,

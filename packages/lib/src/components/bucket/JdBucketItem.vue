@@ -1,11 +1,5 @@
 <template>
-  <div
-    ref="elDragEl"
-    class="jd-bucket-item"
-    :class="classes"
-    @mousedown="onPress"
-    @click="onRelease"
-  >
+  <div ref="elDrag" class="jd-bucket-item" :class="classes" @mousedown="onPress" @click="onRelease">
     <slot name="aside" :state="state"></slot>
     <slot>item: {{ model }}</slot>
     <slot name="bside"></slot>
@@ -32,7 +26,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const elDragEl = ref<any>(null); // sortable DOM 으로 다루는것 제어용
+    const elDrag = ref<any>(null); // sortable DOM 으로 다루는것 제어용
     const itemRef = provideJdBucketItemRef();
     const containerRef = useJdBucketContainerRef();
     itemRef.setModel(props.model);
@@ -75,7 +69,7 @@ export default defineComponent({
 
     onMounted(() => {
       containerRef.joinItemRef(itemRef);
-      itemRef.setElContainer(elDragEl.value);
+      itemRef.setElContainer(elDrag.value);
       const observeState = itemRef.observeChangeState().subscribe(onStateChange);
       bucketListener.add(observeState);
     });
@@ -87,7 +81,7 @@ export default defineComponent({
     });
 
     return {
-      elDragEl,
+      elDrag,
       state,
       classes,
       onPress,
