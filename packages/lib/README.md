@@ -4,6 +4,12 @@ Vue bucket 기능 UI
 
 ## Get started
 
+### npm install
+
+```javascript
+$ npm install @jood/v-bucket
+```
+
 ### main.ts
 
 ```javascript
@@ -48,11 +54,7 @@ export default {
       <jd-bucket-container
         v-model="receiverA1.list"
         :groupName="groupA"
-        :receiver="true"
-        :max="-1"
-        :lazyChangeStateDelay="100"
-        :useGhostBar="true"
-      >
+        :receiver="true">
         <jd-bucket-item
           v-for="(item, index) in receiverA1.list"
           :key="`${index}_${item.id}`"
@@ -94,7 +96,6 @@ export default {
     const senderA1 = reactive<{ list: any[] }>({
       list: [{id:1}, {id:2}, {id:3}, {id:4}, {id:5}]
     });
-    
     return {
       groupA,
       receiverA1,
