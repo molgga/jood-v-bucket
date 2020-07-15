@@ -120,11 +120,10 @@ export default {
 ### Dev
 
 ```
-# symlink
-$ npm run bootstrap:symlink
-
-# module install
 $ npm run bootstrap
+# 1. install node_modules 
+# 2. build & declaration
+# 3. symlink
 ```
 
 ```
