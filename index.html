@@ -52,6 +52,9 @@
         <article><h1>@jood/v-bucket</h1>
 <p>Vue bucket 기능 UI</p>
 <h2>Get started</h2>
+<h3>npm install</h3>
+<pre class="prettyprint source lang-javascript"><code>$ npm install @jood/v-bucket
+</code></pre>
 <h3>main.ts</h3>
 <pre class="prettyprint source lang-javascript"><code>import '@jood/v-bucket/dist/v-bucket.css';
 </code></pre>
@@ -89,11 +92,7 @@ export default {
       &lt;jd-bucket-container
         v-model=&quot;receiverA1.list&quot;
         :groupName=&quot;groupA&quot;
-        :receiver=&quot;true&quot;
-        :max=&quot;-1&quot;
-        :lazyChangeStateDelay=&quot;100&quot;
-        :useGhostBar=&quot;true&quot;
-      >
+        :receiver=&quot;true&quot;>
         &lt;jd-bucket-item
           v-for=&quot;(item, index) in receiverA1.list&quot;
           :key=&quot;`${index}_${item.id}`&quot;
@@ -135,7 +134,6 @@ export default {
     const senderA1 = reactive&lt;{ list: any[] }>({
       list: [{id:1}, {id:2}, {id:3}, {id:4}, {id:5}]
     });
-    
     return {
       groupA,
       receiverA1,
@@ -165,7 +163,7 @@ export default {
 <br class="clear">
 
 <footer>
-    Documentation generated at Wed Jul 15 2020 06:16:12 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Wed Jul 15 2020 07:25:07 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>
