@@ -98,14 +98,14 @@ export interface IBucketRef {
  * @interface IBucketContainerRef
  */
 export interface IBucketContainerRef&lt;TM = any> {
-  readonly groupName: string;
+  readonly groupName: BucketGroupNameType;
   readonly max: number;
   readonly isReceiver: boolean;
   readonly isMultiple: boolean;
   readonly isMaximum: boolean;
   readonly elContainer: Element | null;
   readonly onDropBefore: Function | null;
-  setGroupName(groupName: string): void;
+  setGroupName(groupName: BucketGroupNameType): void;
   setReceiver(is: boolean): void;
   setMultiple(is: boolean): void;
   setMax(max: number): void;
@@ -157,7 +157,7 @@ export interface IBucketItemRef&lt;TM = any> {
   setElContainer(element: Element): void;
   setSelected(is: boolean): void;
   getUid(): string;
-  getElBound(): ClientRect | DOMRect | null;
+  getElBound(): BucketDOMRectBound | null;
   observeChangeState(): Observable&lt;any>;
   dispatchChangeState(): void;
   destroy(): void;
@@ -278,6 +278,15 @@ export interface BucketDropBeforeParams {
   toContainer: IBucketContainerRef;
   itemRefs: IBucketItemRef[];
 }
+
+export interface BucketDOMRectBound {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export type BucketGroupNameType = number | string;
 </code></pre>
         </article>
     </section>
@@ -290,7 +299,7 @@ export interface BucketDropBeforeParams {
 <br class="clear">
 
 <footer>
-    Documentation generated at Tue Jul 14 2020 09:10:47 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Wed Jul 15 2020 06:16:12 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>
