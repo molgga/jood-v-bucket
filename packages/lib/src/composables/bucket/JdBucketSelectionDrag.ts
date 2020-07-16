@@ -29,7 +29,6 @@ export class JdBucketSelectionDrag {
   /**
    * 터치 분기 처리
    * @protected
-   * @returns {{ is: boolean; EventType: { [key: string]: any } }}
    */
   protected touchable(): { is: boolean; EventType: { [key: string]: any } } {
     const is = isTouchable();
