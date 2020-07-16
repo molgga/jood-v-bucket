@@ -247,5 +247,7 @@ export default defineComponent({
   box-shadow: inset 0 0 1px 1px rgba(25, 125, 220, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.15);
   background-color: rgba(25, 125, 220, 0.25);
   z-index: 99999;
+  user-select: none;
+  pointer-events: none;
 }
 </style>

@@ -57,6 +57,7 @@ import {
   BucketDragDrop
 } from '../../composables/bucket';
 import JdBucketContainerIndicate from './JdBucketContainerIndicate.vue';
+import { isTouchable } from '../../utils';
 
 export default defineComponent({
   name: 'JdBucketContainer',
@@ -264,11 +265,13 @@ export default defineComponent({
       if (!allowRangeSelection.value) return;
       if (state.isDragChoose) return;
       if (evt.which !== 1) return; // left-click
-      bucketRef.dispatchRangeSelectionStart({
-        x: evt.x,
-        y: evt.y,
-        container: containerRef
-      });
+      if (!isTouchable()) {
+        bucketRef.dispatchRangeSelectionStart({
+          x: evt.x,
+          y: evt.y,
+          container: containerRef
+        });
+      }
     };
 
     const onContainerEnter = () => {
