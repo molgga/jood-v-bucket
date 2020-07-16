@@ -8,12 +8,13 @@
     "bootstrap": "yarn install --production=false && npm run generate && npm run symlink",
     "symlink": "cd ./packages/lib && yarn link && cd ../../packages/dev && yarn link @jood/v-bucket && cd ../../",
     "generate": "yarn workspace @jood/v-bucket generate",
-    "example:build": "yarn workspace dev build",
-    "example:copy": "copyfiles -u 3 ./packages/dev/dist-example/* ./packages/dev/dist-example/**/* ./docs/dist-example",
+    "page:example-dist": "yarn workspace dev build",
+    "page:example-make": "copyfiles -u 3 ./packages/dev/dist-example/* ./packages/dev/dist-example/**/* ./docs",
+    "page:document-dist": "jsdoc -c jsdoc.json -r -d docs/documents",
+    "page:clear": "rm -rf docs",
+    "page:expose": "npm run page:example-dist && npm run page:example-make && npm run page:document-dist",
     "ci:build": "npm run generate",
     "ci:test": "yarn workspace @jood/v-bucket test",
-    "ci:doc": "jsdoc -c jsdoc.json -r -d docs",
-    "ci:doc-example": "npm run symlink && npm run example:build && npm run example:copy",
-    "ci:doc-expose": "npm run ci:doc && npm run ci:doc-example"
+    "ci:after-success": "npm run page:clear && npm run page:expose"
   }
 }

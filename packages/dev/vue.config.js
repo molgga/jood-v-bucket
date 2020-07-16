@@ -1,7 +1,7 @@
 /* eslint-disable */
 const path = require('path');
-const isBuild = !!process.env.BUILD;
-const PUBLIC_PATH = isBuild ? 'https://molgga.github.io/jood-v-bucket/dist-example' : undefined;
+const isBuild = !!process.env.VUE_APP_BUILD;
+const PUBLIC_PATH = isBuild ? 'https://molgga.github.io/jood-v-bucket' : undefined;
 const config = {
   publicPath: PUBLIC_PATH,
   outputDir: 'dist-example',
