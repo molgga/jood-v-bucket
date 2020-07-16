@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>types.ts - Documentation</title>
+    <title>JdBucketRef.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,7 +30,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">types.ts</h1>
+    <h1 class="page-title">JdBucketRef.ts</h1>
     
 
     
@@ -40,253 +40,173 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Observable } from 'rxjs';
+            <pre class="prettyprint source linenums"><code>import { Subject, Observable } from 'rxjs';
+import {
+  BucketEventType,
+  BucketDragStart,
+  BucketEvent,
+  BucketDragEnd,
+  IBucketContainerRef,
+  IBucketRef,
+  BucketDragChoose,
+  BucketRangeSelectionEvent
+} from './types';
 
 /**
+ * 버킷 최상위 관리
  * @export
- * @enum {number}
+ * @class JdBucketRef
+ * @implements {IBucketRef}
  */
-export enum BucketEventType {
-  DRAG_CHOOSE = 'DRAG_CHOOSE',
-  DRAG_UNCHOOSE = 'DRAG_UNCHOOSE',
-  DRAG_START = 'DRAG_START',
-  DRAG_END = 'DRAG_END'
-}
+export class JdBucketRef implements IBucketRef {
+  constructor() {}
+  protected containerRefMap: Map&lt;string, IBucketContainerRef> = new Map();
+  protected subjectDragger: Subject&lt;BucketEvent> = new Subject();
+  protected subjectRangeSelection: Subject&lt;BucketRangeSelectionEvent> = new Subject();
+  protected draggingContainerRef: IBucketContainerRef | null = null;
+  protected fallbackIndicate: boolean = false;
 
-/**
- * @export
- * @interface BucketDragSelectionState
- */
-export interface BucketDragSelectionState {
-  visible: boolean;
-  count: number;
-  style: any;
-  itemRefs: IBucketItemRef[];
-}
+  /**
+   * dnd 폴백을 사용하는지 여부
+   * @readonly
+   * @type {boolean}
+   */
+  get isFallbackIndicate(): boolean {
+    return this.fallbackIndicate;
+  }
 
-/**
- * @export
- * @interface BucketRangeSelectionState
- */
-export interface BucketRangeSelectionState {
-  visible: boolean;
-  style: any;
-}
+  /**
+   * dnd 폴백을 사용하는지 여부 지정.
+   * 폴백을 사용하지 않는 다면 브라우저에서 기본으로 지원하는 드래그(중인 이미지) UI 를 사용하고,
+   * 폴백을 사용한다면 DOM 을 이용하는데, draggable 에서 사용하는 폴백 DOM 을 invisible 처리하고,
+   * draggable 대신 드래그 중인 UI 를 표시한다.
+   * @param {boolean} is
+   */
+  setFallbackIndicate(is: boolean): void {
+    this.fallbackIndicate = !!is;
+  }
 
-/**
- * @export
- * @interface IBucketRef
- */
-export interface IBucketRef {
-  readonly isFallbackIndicate: boolean;
-  setFallbackIndicate(is: boolean): void;
-  getContainerRefs(): Map&lt;string, IBucketContainerRef>;
-  observeDragger(): Observable&lt;BucketEvent>;
-  observeRangeSelection(): Observable&lt;BucketRangeSelectionEvent>;
-  dispatchDragChoose(params: BucketDragChoose): void;
-  dispatchDragUnchoose(params: BucketDragChoose): void;
-  dispatchDragStart(params: BucketDragStart): void;
-  dispatchDragEnd(params: BucketDragEnd): void;
-  dispatchRangeSelectionStart(params: BucketRangeSelectionEvent): void;
-  joinContainerRef(containerRef: IBucketContainerRef): void;
-  unjoinContainerRef(containerRef: IBucketContainerRef): void;
-  findContainerRefByElement(element: Element): IBucketContainerRef;
-}
+  /**
+   *
+   * 등록된 버킷 컨테이너 맵.
+   * @returns {Map&lt;string, IBucketContainerRef>}
+   */
+  getContainerRefs(): Map&lt;string, IBucketContainerRef> {
+    return this.containerRefMap;
+  }
 
-/**
- * @export
- * @interface IBucketContainerRef
- */
-export interface IBucketContainerRef&lt;TM = any> {
-  readonly groupName: BucketGroupNameType;
-  readonly max: number;
-  readonly isReceiver: boolean;
-  readonly isMultiple: boolean;
-  readonly isMaximum: boolean;
-  readonly elContainer: Element | null;
-  readonly onDropBefore: Function | null;
-  setGroupName(groupName: BucketGroupNameType): void;
-  setReceiver(is: boolean): void;
-  setMultiple(is: boolean): void;
-  setMax(max: number): void;
-  setList(list: any): void;
-  setElContainer(element: Element): void;
-  setLazyStateChangeDelay(delay: number): void;
-  setDropBefore(handle: Function): void;
-  getUid(): string;
-  getList(): TM[];
-  observeDropped(): Observable&lt;BucketDragDrop>;
-  dispatchDropped(evt: BucketDragDrop): void;
-  observeChangeState(): Observable&lt;IBucketContainerRef>;
-  dispatchChangeState(): void;
-  getDragItems(): IBucketItemRef[];
-  addDragItem(itemRef: IBucketItemRef): void;
-  addDragItemToBoundary(boundary: SelectionBoundary): void;
-  removeDragItem(itemRef: IBucketItemRef): void;
-  setDragItem(itemRef: IBucketItemRef): void;
-  flushDragItem(): void;
-  isGroupSame(fromContainer: IBucketContainerRef): boolean;
-  isGroupInsertable(fromContainer: IBucketContainerRef): boolean;
-  removeByIndex(index: number): void;
-  removeByModel(model: any): void;
-  findDragItemIndex(itemRef: IBucketItemRef): number;
-  findItemRefIndex(itemRef: IBucketItemRef): number;
-  findItemRefByElement(element: Element): IBucketItemRef;
-  joinItemRef(itemRef: IBucketItemRef): void;
-  unjoinItemRef(itemRef: IBucketItemRef): void;
-  getItemRefs(): Map&lt;string, IBucketItemRef>;
-  createCloneModel(): BucketCloneModel;
-  mergeToDrop(
-    insertIndex: number,
-    fromContainer: IBucketContainerRef,
-    fnEmitter?: Function
-  ): Promise&lt;void>;
-  destroy(): void;
-}
+  /**
+   * 옵저버: 드래그 상태
+   * @returns {Observable&lt;BucketEvent>}
+   */
+  observeDragger(): Observable&lt;BucketEvent> {
+    return this.subjectDragger.asObservable();
+  }
 
-/**
- * @export
- * @interface IBucketItemRef
- * @template TM
- */
-export interface IBucketItemRef&lt;TM = any> {
-  readonly model: TM | null;
-  readonly isSelected: boolean;
-  readonly elContainer: Element | null;
-  setModel(model: any): void;
-  setElContainer(element: Element): void;
-  setSelected(is: boolean): void;
-  getUid(): string;
-  getElBound(): BucketDOMRectBound | null;
-  observeChangeState(): Observable&lt;any>;
-  dispatchChangeState(): void;
-  destroy(): void;
-}
+  /**
+   * 옵저버: 영역 선택기 상태
+   * @returns {Observable&lt;BucketRangeSelectionEvent>}
+   */
+  observeRangeSelection(): Observable&lt;BucketRangeSelectionEvent> {
+    return this.subjectRangeSelection.asObservable();
+  }
 
-/**
- * @export
- * @interface BucketCloneModel
- */
-export interface BucketCloneModel {
-  [key: string]: string;
-}
+  /**
+   * 알림: 드래그 아이템 선택
+   * @param {BucketDragChoose} params
+   */
+  dispatchDragChoose(params: BucketDragChoose): void {
+    const { fromContainer, sortableEvent } = params;
+    this.subjectDragger.next({
+      type: BucketEventType.DRAG_CHOOSE,
+      fromContainer,
+      sortableEvent
+    });
+  }
 
-/**
- * @export
- * @interface SelectionBound
- */
-export interface SelectionBound {
-  x: number;
-  y: number;
-}
+  /**
+   * 알림: 드래그 아이템 선택 해제
+   * @param {BucketDragChoose} params
+   */
+  dispatchDragUnchoose(params: BucketDragChoose): void {
+    const { sortableEvent } = params;
+    this.subjectDragger.next({
+      type: BucketEventType.DRAG_UNCHOOSE,
+      sortableEvent
+    });
+  }
 
-/**
- * @export
- * @interface SelectionBoundary
- */
-export interface SelectionBoundary {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
+  /**
+   * 알림: 드래그 시작
+   * @param {BucketDragStart} params
+   */
+  dispatchDragStart(params: BucketDragStart): void {
+    const { fromContainer, sortableEvent } = params;
+    this.draggingContainerRef = fromContainer;
+    this.subjectDragger.next({
+      type: BucketEventType.DRAG_START,
+      sortableEvent,
+      fromContainer
+    });
+  }
 
-/**
- * @export
- * @interface BucketDragChoose
- * @template C
- */
-export interface BucketDragChoose&lt;C = IBucketContainerRef> {
-  fromContainer?: C;
-  sortableEvent: BucketSortableEvent;
-}
+  /**
+   * 알림: 드래그 종료
+   * @param {BucketDragEnd} params
+   */
+  dispatchDragEnd(params: BucketDragEnd): void {
+    const { toContainer, sortableEvent } = params;
+    const fromContainer = this.draggingContainerRef;
+    this.subjectDragger.next({
+      type: BucketEventType.DRAG_END,
+      sortableEvent,
+      fromContainer,
+      toContainer
+    });
+    toContainer.dispatchDropped({
+      sortableEvent,
+      fromContainer: this.draggingContainerRef,
+      toContainer: toContainer
+    });
+    this.draggingContainerRef = null;
+  }
 
-/**
- * @export
- * @interface BucketDragStart
- * @template C
- */
-export interface BucketDragStart&lt;C = IBucketContainerRef> {
-  fromContainer: C;
-  sortableEvent: BucketSortableEvent;
-}
+  /**
+   * 알림: 영역 선택기 시작
+   * @param {BucketRangeSelectionEvent} params
+   */
+  dispatchRangeSelectionStart(params: BucketRangeSelectionEvent): void {
+    this.subjectRangeSelection.next(params);
+  }
 
-/**
- * @export
- * @interface BucketDragEnd
- * @template C
- */
-export interface BucketDragEnd&lt;C = IBucketContainerRef> {
-  toContainer: C;
-  sortableEvent: BucketSortableEvent;
-}
+  /**
+   * 버킷 컨테이너 등록
+   * @param {IBucketContainerRef} containerRef
+   */
+  joinContainerRef(containerRef: IBucketContainerRef): void {
+    this.containerRefMap.set(containerRef.getUid(), containerRef);
+  }
 
-/**
- * @export
- * @interface BucketDragDrop
- * @template C
- */
-export interface BucketDragDrop&lt;C = IBucketContainerRef> {
-  fromContainer: C | null;
-  toContainer: C | null;
-  sortableEvent: BucketSortableEvent;
-}
+  /**
+   * 버킷 컨테이너 등록 해제
+   * @param {IBucketContainerRef} containerRef
+   */
+  unjoinContainerRef(containerRef: IBucketContainerRef): void {
+    this.containerRefMap.delete(containerRef.getUid());
+  }
 
-/**
- * @export
- * @interface BucketEvent
- * @template C
- */
-export interface BucketEvent&lt;C = IBucketContainerRef> {
-  type: BucketEventType;
-  fromContainer?: C | null;
-  toContainer?: C | null;
-  sortableEvent: BucketSortableEvent;
+  /**
+   * 해당 element(DOM) 가 속한 버킷 컨테이너 찾기
+   * @param {Element} element
+   * @returns {IBucketContainerRef}
+   */
+  findContainerRefByElement(element: Element): IBucketContainerRef {
+    const finded = Array.from(this.containerRefMap.values()).find((ref: IBucketContainerRef) => {
+      return ref.elContainer === element;
+    }) as IBucketContainerRef;
+    return finded;
+  }
 }
-
-/**
- * @export
- * @interface BucketSortableEvent
- */
-export interface BucketSortableEvent {
-  target: Element;
-  to: Element;
-  from: Element;
-  item: Element;
-  clone: Element;
-  oldIndex: number;
-  newIndex: number;
-  originalEvent: MouseEvent;
-}
-
-/**
- * @export
- * @interface BucketRangeSelectionEvent
- */
-export interface BucketRangeSelectionEvent {
-  x: number;
-  y: number;
-  container: IBucketContainerRef;
-}
-
-/**
- * @export
- * @interface BucketDropBeforeParams
- */
-export interface BucketDropBeforeParams {
-  fromContainer: IBucketContainerRef;
-  toContainer: IBucketContainerRef;
-  itemRefs: IBucketItemRef[];
-}
-
-export interface BucketDOMRectBound {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-export type BucketGroupNameType = number | string;
 </code></pre>
         </article>
     </section>
@@ -299,7 +219,7 @@ export type BucketGroupNameType = number | string;
 <br class="clear">
 
 <footer>
-    Documentation generated at Thu Jul 16 2020 02:23:51 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Thu Jul 16 2020 02:59:54 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>
