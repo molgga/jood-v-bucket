@@ -13,6 +13,7 @@
     "ci:build": "npm run generate",
     "ci:test": "yarn workspace @jood/v-bucket test",
     "ci:doc": "jsdoc -c jsdoc.json -r -d docs",
-    "ci:doc-example": "npm run symlink && npm run example:build && npm run example:copy"
+    "ci:doc-example": "npm run symlink && npm run example:build && npm run example:copy",
+    "ci:doc-expose": "npm run ci:doc && npm run ci:doc-example"
   }
 }
