@@ -110,8 +110,9 @@ export default {
 
 ### See 
 
-- [Example](https://github.com/molgga/jood-v-bucket/tree/master/packages/dev/src/components/example).
-- [Doc](https://molgga.github.io/jood-v-bucket).
+- [Example(web)](https://molgga.github.io/jood-v-bucket/dist-example).
+- [Example(source)](https://github.com/molgga/jood-v-bucket/tree/master/packages/dev/src/components/example).
 - [Github](https://github.com/molgga/jood-v-bucket).
 - [NPM](https://www.npmjs.com/package/@jood/v-bucket).
+- [Doc](https://molgga.github.io/jood-v-bucket).
 
