@@ -24,7 +24,8 @@
             :key="keyUidHelper(receiverA1.list, index, item.id)"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -38,12 +39,16 @@
           :lazyChangeStateDelay="100"
           :dropBefore="onDropBeforeFilter"
         >
+          <template #header>
+            <p>id 가 홀수가 아닌것 filter</p>
+          </template>
           <jd-bucket-item
             v-for="(item, index) in receiverA2.list"
             :key="keyUidHelper(receiverA2.list, index, item.id)"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -54,7 +59,8 @@
             :key="item.id"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
     </div>

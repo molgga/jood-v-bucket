@@ -44,7 +44,8 @@
             :key="keyUidHelper(receiverA1.list, index, item.id)"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -62,7 +63,8 @@
             :key="keyUidHelper(receiverA2.list, index, item.id)"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
       <div class="exm-box">
@@ -73,7 +75,8 @@
             :key="item.id"
             :model="item"
             class="test-item"
-          >{{ item }}</jd-bucket-item>
+            >{{ item }}</jd-bucket-item
+          >
         </jd-bucket-container>
       </div>
     </div>

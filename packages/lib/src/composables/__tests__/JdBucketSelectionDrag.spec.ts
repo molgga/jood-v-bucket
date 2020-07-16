@@ -69,10 +69,7 @@ describe('JdBucketSelectionDrag', () => {
       y: 200 
     });
     const doc = selection.getDocument();
-    const evt = new MouseEvent('mousemove');
-    const evtAnyRef:any = evt;
-    evtAnyRef.x = 111;
-    evtAnyRef.y = 222;
+    const evt = new MouseEvent('mousemove', { clientX: 111, clientY: 222 });
     doc.dispatchEvent(evt);
     selection.endSelection();
   });

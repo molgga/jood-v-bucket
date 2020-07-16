@@ -26,13 +26,12 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const elDrag = ref<any>(null); // sortable DOM 으로 다루는것 제어용
+    const elDrag = ref<Element | null>(null); // sortable DOM 으로 다루는것 제어용
     const itemRef = provideJdBucketItemRef();
     const containerRef = useJdBucketContainerRef();
     itemRef.setModel(props.model);
 
     const bucketListener = new Subscription();
-
     const state = reactive({
       isDragging: false,
       isPressBeforeSelected: false,
@@ -69,7 +68,7 @@ export default defineComponent({
 
     onMounted(() => {
       containerRef.joinItemRef(itemRef);
-      itemRef.setElContainer(elDrag.value);
+      itemRef.setElContainer(elDrag.value as Element);
       const observeState = itemRef.observeChangeState().subscribe(onStateChange);
       bucketListener.add(observeState);
     });
