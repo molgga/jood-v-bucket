@@ -6,9 +6,11 @@
           <div
             v-for="(model, index) in previewBox.list"
             :key="index"
-            :style="{ marginLeft: `${index*5}px` }"
+            :style="{ marginLeft: `${index * 5}px` }"
             class="item-box"
-          >{{ model }}</div>
+          >
+            {{ model }}
+          </div>
           <div class="count">
             <span class="label">count: {{ previewBox.count }}</span>
           </div>
