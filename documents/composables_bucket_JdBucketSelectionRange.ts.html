@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>BucketDragSelectionState - Documentation</title>
+    <title>composables/bucket/JdBucketSelectionRange.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,98 +30,202 @@
 
 <div id="main">
     
-    <h1 class="page-title">BucketDragSelectionState</h1>
+    <h1 class="page-title">composables/bucket/JdBucketSelectionRange.ts</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        BucketDragSelectionState
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Subject, Observable } from 'rxjs';
+import { SelectionBound, SelectionBoundary } from './types';
 
-<article>
-    <div class="container-overview">
-    
-        
+export class JdBucketSelectionRange {
+  constructor() {}
 
-        
+  static _instance: JdBucketSelectionRange | null = null;
+  static getInstance() {
+    if (!JdBucketSelectionRange._instance) {
+      JdBucketSelectionRange._instance = new JdBucketSelectionRange();
+    }
+    return JdBucketSelectionRange._instance;
+  }
 
+  protected startX = 0;
+  protected startY = 0;
+  protected moveX = 0;
+  protected moveY = 0;
+  protected subjectBoundary: Subject&lt;SelectionBoundary> = new Subject();
+  protected subjectFlushed: Subject&lt;SelectionBoundary> = new Subject();
+  protected lastBoundary: SelectionBoundary | null = null;
 
-<dl class="details">
+  /**
+   * document
+   * @returns {Document}
+   */
+  getDocument(): Document {
+    return window.document;
+  }
 
-    
+  /**
+   * document mousemove 이벤트 핸들러.
+   * @protected
+   */
+  protected handleSelectionMove = (evt: MouseEvent) => {
+    evt.preventDefault();
+    this.moveX = evt.x;
+    this.moveY = evt.y;
+    this.updateBoundary();
+  };
 
-    
+  /**
+   * document mouseup 이벤트 핸들러.
+   * @protected
+   */
+  protected handleSelectionUp = () => {
+    this.endSelection();
+  };
 
-    
+  /**
+   * document 핸들러 등록
+   * @protected
+   */
+  protected addSelectionHandler() {
+    const doc = this.getDocument();
+    doc.addEventListener('mousemove', this.handleSelectionMove);
+    doc.addEventListener('mouseup', this.handleSelectionUp);
+  }
 
-    
+  /**
+   * document 핸들러 제거
+   * @protected
+   */
+  protected removeSelectionHandler() {
+    const doc = this.getDocument();
+    doc.removeEventListener('mousemove', this.handleSelectionMove);
+    doc.removeEventListener('mouseup', this.handleSelectionUp);
+  }
 
-    
+  /**
+   * 옵저버: 바운더리 영역
+   * @returns {Observable&lt;SelectionBoundary>}
+   */
+  observeBoundary(): Observable&lt;SelectionBoundary> {
+    return this.subjectBoundary.asObservable();
+  }
 
-    
+  /**
+   * 옵저버: 바운더리 선택 해제
+   * @returns {Observable&lt;SelectionBoundary>}
+   */
+  observeFlushed(): Observable&lt;SelectionBoundary> {
+    return this.subjectFlushed.asObservable();
+  }
 
-    
+  /**
+   * 알림: 바운더리 영역 변경.
+   * @param {SelectionBoundary} boundary
+   */
+  dispatchBoundary(boundary: SelectionBoundary): void {
+    this.lastBoundary = boundary;
+    this.subjectBoundary.next(boundary);
+  }
 
-    
+  /**
+   * 알림: 바운더리 영역 해제.
+   */
+  dispatchFlushed(): void {
+    this.subjectFlushed.next(this.lastBoundary as SelectionBoundary);
+  }
 
-    
+  /**
+   * 바운더리 영역 변경
+   */
+  updateBoundary(): void {
+    const x1 = this.startX;
+    const x2 = this.moveX;
+    const y1 = this.startY;
+    const y2 = this.moveY;
+    const top = Math.min(y1, y2);
+    const left = Math.min(x1, x2);
+    const width = left ? Math.abs(x1 - x2) : 0;
+    const height = top ? Math.abs(y1 - y2) : 0;
+    this.dispatchBoundary({
+      x: left,
+      y: top,
+      w: width,
+      h: height
+    });
+  }
 
-    
+  /**
+   * 셀렉션 시작.
+   * @param {SelectionBound} bound
+   */
+  startSelection(bound: SelectionBound): void {
+    const { x = 0, y = 0 } = bound;
+    this.startX = x;
+    this.startY = y;
+    this.updateBoundary();
+    this.removeSelectionHandler();
+    this.addSelectionHandler();
+  }
 
-    
+  /**
+   * 셀렉션 종료.
+   */
+  endSelection(): void {
+    this.startX = 0;
+    this.startY = 0;
+    this.moveX = 0;
+    this.moveY = 0;
+    this.flushSelection();
+  }
 
-    
+  /**
+   * 셀렉션 해제.
+   */
+  flushSelection(): void {
+    this.dispatchFlushed();
+    this.removeSelectionHandler();
+  }
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="composables_bucket_types.ts.html">composables/bucket/types.ts</a>, <a href="composables_bucket_types.ts.html#line16">line 16</a>
-    </li></ul></dd>
-    
+  /**
+   * 해제.
+   */
+  dispose(): void {
+    try {
+      this.flushSelection();
+      // ...
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+  /**
+   * 파기
+   */
+  destroy(): void {
+    try {
+      this.flushSelection();
+      if (this.subjectBoundary) {
+        this.subjectBoundary.unsubscribe();
+      }
+      if (this.subjectFlushed) {
+        this.subjectFlushed.unsubscribe();
+      }
+      // ...
+    } catch (err) {
+      console.error(err);
+    }
+  }
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
