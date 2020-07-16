@@ -10,7 +10,6 @@ import {
   BucketGroupNameType
 } from './types';
 import { createUid, isIntersect } from '../../utils';
-import { JdBucketSelectionRange } from './JdBucketSelectionRange';
 
 /**
  *
@@ -31,7 +30,6 @@ type BucketDropBeforeEmitter = (params: { changeList: any[] }) => any;
 export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
   constructor() {
     this.uid = createUid();
-    this.rangeSelection = JdBucketSelectionRange.getInstance();
   }
 
   protected uid: string = '';
@@ -46,9 +44,6 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
   protected dragItemRefs: IBucketItemRef[] = [];
   protected subjectDropped: Subject<BucketDragDrop> = new Subject();
   protected subjectChangeState: Subject<IBucketContainerRef> = new Subject();
-  protected rangeSelection: JdBucketSelectionRange | null = null;
-  protected rangeSelectionListener: Subscription | null = null;
-  protected rangeSelectionBoundary: SelectionBoundary | null = null;
   protected lazyChangeStateTimer: any | null = null;
   protected lazyChangeStateDelay: number = 0;
 
@@ -536,12 +531,6 @@ export class JdBucketContainerRef<TM = any> implements IBucketContainerRef<TM> {
    */
   destroy(): void {
     try {
-      if (this.rangeSelection) {
-        this.rangeSelection.dispose();
-      }
-      if (this.rangeSelectionListener) {
-        this.rangeSelectionListener.unsubscribe();
-      }
       if (this.subjectDropped) {
         this.subjectDropped.unsubscribe();
       }
