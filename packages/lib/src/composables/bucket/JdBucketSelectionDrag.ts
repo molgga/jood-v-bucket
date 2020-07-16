@@ -1,5 +1,6 @@
 import { Subject, Observable } from 'rxjs';
 import { SelectionBound, SelectionBoundary } from './types';
+import { getTouchPosition, isTouchable } from '../../utils';
 
 export class JdBucketSelectionDrag {
   constructor() {}
@@ -26,13 +27,32 @@ export class JdBucketSelectionDrag {
   }
 
   /**
+   * 터치 분기 처리
+   * @protected
+   * @returns {{ is: boolean; EventType: { [key: string]: any } }}
+   */
+  protected touchable(): { is: boolean; EventType: { [key: string]: any } } {
+    const is = isTouchable();
+    return {
+      is,
+      EventType: {
+        UP: is ? 'touchup' : 'mouseup',
+        MOVE: is ? 'touchmove' : 'mousemove'
+      }
+    };
+  }
+
+  /**
    * document mousemove 이벤트 핸들러.
    * @protected
    */
-  protected handleSelectionMove = (evt: MouseEvent) => {
-    evt.preventDefault();
-    this.moveX = evt.x;
-    this.moveY = evt.y;
+  protected handleSelectionMove = (evt: MouseEvent | TouchEvent) => {
+    if (!this.touchable().is) {
+      evt.preventDefault();
+    }
+    const { x = 0, y = 0 } = getTouchPosition(evt) || {};
+    this.moveX = x;
+    this.moveY = y;
     this.updateBoundary();
   };
 
@@ -50,8 +70,9 @@ export class JdBucketSelectionDrag {
    */
   protected addSelectionHandler() {
     const doc = this.getDocument();
-    doc.addEventListener('mousemove', this.handleSelectionMove);
-    doc.addEventListener('mouseup', this.handleSelectionUp);
+    const eventType = this.touchable().EventType;
+    doc.addEventListener(eventType.MOVE, this.handleSelectionMove);
+    doc.addEventListener(eventType.UP, this.handleSelectionUp);
   }
 
   /**
@@ -60,8 +81,9 @@ export class JdBucketSelectionDrag {
    */
   protected removeSelectionHandler() {
     const doc = this.getDocument();
-    doc.removeEventListener('mousemove', this.handleSelectionMove);
-    doc.removeEventListener('mouseup', this.handleSelectionUp);
+    const eventType = this.touchable().EventType;
+    doc.removeEventListener(eventType.MOVE, this.handleSelectionMove);
+    doc.removeEventListener(eventType.UP, this.handleSelectionUp);
   }
 
   /**
