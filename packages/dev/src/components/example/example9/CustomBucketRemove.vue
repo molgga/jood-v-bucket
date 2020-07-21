@@ -1,6 +1,6 @@
 <template>
   <div class="custom-bucket-remove">
-    <button @click="onClickRemove">X</button>
+    <button @click="onRemoveClick" @touchend="onRemoveTouch">X</button>
   </div>
 </template>
 
@@ -19,15 +19,20 @@ export default defineComponent({
   setup(props, context) {
     const { emit } = context;
     const itemRef = useJdBucketItemRef();
-    const onClickRemove = () => {
+    const onRemoveClick = () => {
+      emit('remove', { itemRef });
+    };
+    const onRemoveTouch = (evt: TouchEvent) => {
+      evt.preventDefault();
+      evt.stopPropagation();
       emit('remove', { itemRef });
     };
     return {
-      onClickRemove
+      onRemoveClick,
+      onRemoveTouch
     };
   }
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
