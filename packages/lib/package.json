@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-bucket",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "main": "dist/v-bucket.common.js",
   "types": "dist/types/index.d.ts",
   "module": "src/index.ts",
