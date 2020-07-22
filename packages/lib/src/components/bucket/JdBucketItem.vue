@@ -1,5 +1,12 @@
 <template>
-  <div ref="elDrag" class="jd-bucket-item" :class="classes" @mousedown="onPress" @click="onRelease">
+  <div
+    ref="elDrag"
+    class="jd-bucket-item"
+    :class="classes"
+    @mousedown="onPress"
+    @click="onRelease"
+    @touchstart="onPressTouch"
+  >
     <slot name="aside" :state="state"></slot>
     <slot>item: {{ model }}</slot>
     <slot name="bside"></slot>
@@ -17,6 +24,7 @@ import {
 } from '@vue/composition-api';
 import { provideJdBucketItemRef, useJdBucketContainerRef } from '../../composables/bucket';
 import { Subscription } from 'rxjs';
+import { isTouchable } from '../../utils';
 
 export default defineComponent({
   name: 'JdBucketItem',
@@ -31,6 +39,7 @@ export default defineComponent({
     const containerRef = useJdBucketContainerRef();
     itemRef.setModel(props.model);
 
+    const isTouch = isTouchable();
     const bucketListener = new Subscription();
     const state = reactive({
       isDragging: false,
@@ -43,6 +52,16 @@ export default defineComponent({
     });
 
     const onPress = () => {
+      if (isTouch) return;
+      switchDragItem();
+    };
+
+    const onPressTouch = () => {
+      if (!isTouch) return;
+      switchDragItem();
+    };
+
+    const switchDragItem = () => {
       if (containerRef.isReceiver) return;
       state.isPressBeforeSelected = containerRef.findDragItemIndex(itemRef) !== -1;
       if (containerRef.isMultiple) {
@@ -84,6 +103,7 @@ export default defineComponent({
       state,
       classes,
       onPress,
+      onPressTouch,
       onRelease
     };
   }
