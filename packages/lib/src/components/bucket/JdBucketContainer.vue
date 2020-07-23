@@ -104,7 +104,9 @@ export default defineComponent({
     dragOptions: {
       type: Object,
       default: () => ({
-        animation: 200
+        animation: 200,
+        delay: 100,
+        delayOnTouchOnly: true
       })
     },
     useGhostBar: {

@@ -1,6 +1,6 @@
 <template>
   <div class="custom-bucket-remove">
-    <button @click="onClickRemove">X</button>
+    <button class="action" @click="onClickRemove">X</button>
   </div>
 </template>
 
@@ -20,6 +20,7 @@ export default defineComponent({
     const { emit } = context;
     const itemRef = useJdBucketItemRef();
     const onClickRemove = () => {
+      console.log('#########');
       emit('remove', { itemRef });
     };
     return {
@@ -30,4 +31,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.custom-bucket-remove {
+  height: 100%;
+  .action {
+    height: 100%;
+  }
+}
 </style>

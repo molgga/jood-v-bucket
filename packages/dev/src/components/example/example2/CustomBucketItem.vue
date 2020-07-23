@@ -124,6 +124,7 @@ export default defineComponent({
   }
   .cbi-panel-bside {
     padding-left: 10px;
+    align-self: stretch;
   }
   .cbi-check {
     display: block;
