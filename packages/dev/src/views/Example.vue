@@ -21,7 +21,7 @@ export default defineComponent({
       const exampleKey = props.example;
       let component: any;
       if (importComponent[exampleKey]) {
-        component = importComponent[exampleKey];
+        component = importComponent[exampleKey].component;
       } else {
         component = ExampleApps['1'];
       }
