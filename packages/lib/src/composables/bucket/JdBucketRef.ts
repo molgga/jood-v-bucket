@@ -10,6 +10,12 @@ import {
   BucketRangeSelectionEvent
 } from './types';
 
+const MouseupEventType = 'mouseup';
+const KeydownEventType = 'keydown';
+const KeyCodes = {
+  ESCAPE: 27
+};
+
 /**
  * 버킷 최상위 관리
  * @export
@@ -106,6 +112,8 @@ export class JdBucketRef implements IBucketRef {
       sortableEvent,
       fromContainer
     });
+    this.removeKeyboardListener();
+    this.addKeyboardListener();
   }
 
   /**
@@ -113,6 +121,7 @@ export class JdBucketRef implements IBucketRef {
    * @param {BucketDragEnd} params
    */
   dispatchDragEnd(params: BucketDragEnd): void {
+    this.removeKeyboardListener();
     const { toContainer, sortableEvent } = params;
     const fromContainer = this.draggingContainerRef;
     this.subjectDragger.next({
@@ -163,5 +172,56 @@ export class JdBucketRef implements IBucketRef {
       return ref.elContainer === element;
     }) as IBucketContainerRef;
     return finded;
+  }
+
+  /**
+   * document
+   * @returns {Document}
+   */
+  protected getDocument(): Document {
+    return window.document;
+  }
+
+  /**
+   * 키보드 이벤트 핸들러
+   * @protected
+   */
+  protected handleKeyboard = (evt: KeyboardEvent) => {
+    if (evt.keyCode === KeyCodes.ESCAPE) {
+      this.cancel();
+    }
+  };
+
+  /**
+   * 키보드 이벤트 핸들러 등록
+   * @protected
+   */
+  protected addKeyboardListener() {
+    const doc = this.getDocument();
+    if (doc) {
+      doc.addEventListener(KeydownEventType, this.handleKeyboard);
+    }
+  }
+
+  /**
+   * 키보드 이벤트 핸들러 제거
+   * @protected
+   */
+  protected removeKeyboardListener() {
+    const doc = this.getDocument();
+    if (doc) {
+      doc.removeEventListener(KeydownEventType, this.handleKeyboard);
+    }
+  }
+
+  /**
+   * 드래그 중 취소
+   */
+  cancel() {
+    this.removeKeyboardListener();
+    if (this.draggingContainerRef) {
+      this.draggingContainerRef.flushDragItem();
+      document.dispatchEvent(new MouseEvent(MouseupEventType));
+    }
   }
 }

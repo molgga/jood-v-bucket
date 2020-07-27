@@ -72,7 +72,7 @@ export default defineComponent({
   props: {
     list: {
       type: Array,
-      default: () => []
+      default: (): any[] => []
     },
     groupName: {
       type: String
@@ -104,7 +104,9 @@ export default defineComponent({
     dragOptions: {
       type: Object,
       default: () => ({
-        animation: 200
+        animation: 200,
+        delay: 100,
+        delayOnTouchOnly: true
       })
     },
     useGhostBar: {

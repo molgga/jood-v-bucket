@@ -1,9 +1,16 @@
 <template>
-  <div>
-    <span
+  <div class="sender-header">
+    <v-chip
       class="test-all"
-      @click="handleAll"
-    >[ {{ state.isAll ? 'V' : '-' }} ] all ({{ state.isAll }})</span>
+      :color="state.isAll ? 'teal' : '#cccccc'"
+      text-color="white"
+      @click="onToggleAll"
+    >
+      <v-avatar left>
+        <v-icon>check_circle</v-icon>
+      </v-avatar>
+      All ({{ state.isAll }})
+    </v-chip>
   </div>
 </template>
 
@@ -16,7 +23,6 @@ export default defineComponent({
   setup() {
     const containerRef = useJdBucketContainerRef();
     const containerListener = new Subscription();
-
     const state = reactive({
       list: containerRef.getList(),
       isAll: false
@@ -39,7 +45,7 @@ export default defineComponent({
       state.isAll = !!allSelected;
     };
 
-    const handleAll = (evt: any) => {
+    const onToggleAll = (evt: any) => {
       evt.preventDefault();
       evt.stopPropagation();
       const checked = !state.isAll;
@@ -67,19 +73,18 @@ export default defineComponent({
 
     return {
       state,
-      handleAll
+      onToggleAll
     };
   }
 });
 </script>
 
 <style lang="scss" scoped>
-.test-all {
-  display: inline-block;
-  margin: 2px;
-  padding: 4px 8px;
-  border-radius: 2px;
-  background-color: #f5f5f5;
-  cursor: pointer;
+.sender-header {
+  margin-bottom: -20px;
+  padding: 10px 20px;
+  .test-all {
+    cursor: pointer;
+  }
 }
 </style>

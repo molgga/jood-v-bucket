@@ -1,20 +1,43 @@
-export const ExampleApps = {
-  '1': () => import('@/components/example/example1/ExampleApp.vue'),
-  '2': () => import('@/components/example/example2/ExampleApp.vue'),
-  '3': () => import('@/components/example/example3/ExampleApp.vue'),
-  '4': () => import('@/components/example/example4/ExampleApp.vue'),
-  '5': () => import('@/components/example/example5/ExampleApp.vue'),
-  '6': () => import('@/components/example/example6/ExampleApp.vue'),
-  '7': () => import('@/components/example/example7/ExampleApp.vue'),
-  '8': () => import('@/components/example/example8/ExampleApp.vue'),
-  '9': () => import('@/components/example/example9/ExampleApp.vue'),
-  '10': () => import('@/components/example/example10/ExampleApp.vue')
-};
+export const ExampleList = [
+  {
+    key: 'sample1',
+    label: 'sample all #1',
+    component: () => import('@/components/example/example-sample1/ExampleApp.vue')
+  },
+  {
+    key: 'selection-drag',
+    label: 'custom selection drag',
+    component: () => import('@/components/example/example-selection-drag/ExampleApp.vue')
+  },
+  {
+    key: 'container-indicate',
+    label: 'custom container indicate',
+    component: () => import('@/components/example/example-container-indicate/ExampleApp.vue')
+  },
+  {
+    key: 'container-inject',
+    label: 'container inject',
+    component: () => import('@/components/example/example-container-inject/ExampleApp.vue')
+  },
+  {
+    key: 'item-inject',
+    label: 'item inject',
+    component: () => import('@/components/example/example-item-inject/ExampleApp.vue')
+  }
+];
+export const ExampleApps = (() => {
+  const hash: any = {};
+  ExampleList.forEach(example => {
+    hash[example.key] = example;
+  });
+  return hash;
+})();
 
 export const exampleLinks = (() => {
   const links = [];
   for (const key in ExampleApps) {
-    links.push({ to: `/example/${key}`, label: `example-${key}` });
+    const example = (ExampleApps as any)[key];
+    links.push({ to: `/example/${key}`, label: example.label });
   }
   return links;
 })();

@@ -1,5 +1,5 @@
 <template>
-  <div class="jd-bucket-selection-indicate">
+  <div class="jd-bucket-selection-indicate" :class="classes">
     <slot name="drag" :state="dragState">
       <div v-if="dragState.visible" class="drag-selection" :style="dragState.style">
         <div class="pivot">{{ dragState.count }}</div>
@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { defineComponent, onMounted, onUnmounted, reactive } from '@vue/composition-api';
+import { defineComponent, onMounted, onUnmounted, reactive, computed } from '@vue/composition-api';
 import {
   useJdBucketRef,
   BucketEvent,
@@ -26,12 +26,14 @@ import {
 } from '../../composables/bucket';
 import { JdBucketSelectionDrag } from '../../composables/bucket/JdBucketSelectionDrag';
 import { JdBucketSelectionRange } from '../../composables/bucket/JdBucketSelectionRange';
+import { isTouchable } from '../../utils';
 
 export default defineComponent({
   setup() {
     const bucketRef = useJdBucketRef();
     bucketRef.setFallbackIndicate(true);
 
+    const isTouch = isTouchable();
     const dragState = reactive<BucketDragSelectionState>({
       visible: false,
       count: 0,
@@ -50,6 +52,10 @@ export default defineComponent({
         width: '0',
         height: '0'
       }
+    });
+
+    const classes = computed(() => {
+      return { 'is-touch': isTouch };
     });
 
     const bucketListener = new Subscription();
@@ -180,6 +186,7 @@ export default defineComponent({
       }
     });
     return {
+      classes,
       dragState,
       rangeState
     };
@@ -188,66 +195,74 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.drag-selection {
-  position: fixed;
-  top: 0;
-  left: 0;
-  user-select: none;
-  pointer-events: none;
-  z-index: 99999;
-  > .pivot {
-    position: absolute;
-    padding: 7px 12px 5px 12px;
-    bottom: 8px;
+.jd-bucket-selection-indicate {
+  .drag-selection {
+    position: fixed;
+    top: 0;
     left: 0;
-    min-width: 12px;
-    line-height: 22px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-    border-radius: 20px;
-    background-color: #ea3d45;
-    border: 1px solid #c72d35;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-    transform: translateX(-50%);
-    &:before {
-      content: '';
+    user-select: none;
+    pointer-events: none;
+    z-index: 99999;
+    > .pivot {
       position: absolute;
-      left: 50%;
-      bottom: -6px;
-      margin-left: -7px;
-      width: 0;
-      height: 0;
-      border-left: 7px solid transparent;
-      border-right: 7px solid transparent;
-      border-top: 7px solid #b9252d;
-    }
-    &:after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      bottom: -4px;
-      margin-left: -6px;
-      width: 0;
-      height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 6px solid #ea3d45;
+      padding: 7px 12px 5px 12px;
+      bottom: 8px;
+      left: 0;
+      min-width: 12px;
+      line-height: 22px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffffff;
+      border-radius: 20px;
+      background-color: #ea3d45;
+      border: 1px solid #c72d35;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+      transform: translateX(-50%);
+      &:before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -6px;
+        margin-left: -7px;
+        width: 0;
+        height: 0;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 7px solid #b9252d;
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        margin-left: -6px;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #ea3d45;
+      }
     }
   }
-}
-.range-selection {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  box-sizing: border-box;
-  box-shadow: inset 0 0 1px 1px rgba(25, 125, 220, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.15);
-  background-color: rgba(25, 125, 220, 0.25);
-  z-index: 99999;
-  user-select: none;
-  pointer-events: none;
+  .range-selection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 1px 1px rgba(25, 125, 220, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.15);
+    background-color: rgba(25, 125, 220, 0.25);
+    z-index: 99999;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  &.is-touch {
+    .drag-selection {
+      transform: translateY(-30px);
+    }
+  }
 }
 </style>
