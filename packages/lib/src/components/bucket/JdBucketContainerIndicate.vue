@@ -65,6 +65,7 @@ export default defineComponent({
     pointer-events: none;
     animation: indicate-dash 30s linear;
     animation-iteration-count: infinite;
+    z-index: 5;
     .insert-overlay-svg {
       position: absolute;
       top: 0;
@@ -85,6 +86,7 @@ export default defineComponent({
     right: -2px;
     bottom: -2px;
     background-color: rgba(255, 255, 255, 0.45);
+    z-index: 5;
   }
 
   &.is-enter {
