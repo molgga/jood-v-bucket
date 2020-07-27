@@ -1,4 +1,4 @@
-import { BucketEventType, JdBucketRef, JdBucketContainerRef } from '../bucket';
+import { BucketEventType, JdBucketRef, JdBucketContainerRef, JdBucketItemRef } from '../bucket';
 
 describe('JdBucketRef', () => {
   let bucketRef: JdBucketRef;
@@ -127,5 +127,43 @@ describe('JdBucketRef', () => {
     expect(bucketRef.findContainerRefByElement(someElement)).toBe(undefined);
     bucketRef.joinContainerRef(someContainer);
     expect(bucketRef.findContainerRefByElement(someElement)).toBe(someContainer);
+  });
+
+  test('cancel', (jestDone) => {
+    const fromContainer = new JdBucketContainerRef();
+    const toContainer = new JdBucketContainerRef();
+    const itemRef1 = new JdBucketItemRef();
+    const element1 = {} as any;
+    itemRef1.setElContainer(element1);
+    toContainer.setReceiver(true);
+
+    const sortableEvent: any = {};
+    const bucketListener = bucketRef.observeDragger().subscribe(evt => {
+      if (evt.type === BucketEventType.DRAG_START) {
+        expect(fromContainer.getDragItems().length).toBe(1);
+      }
+    });
+    const containerListener = toContainer.observeDropped().subscribe(evt => {
+      expect(fromContainer.getDragItems().length).toBe(0);
+      containerListener.unsubscribe();
+      bucketListener.unsubscribe();
+      jestDone();
+    });
+    fromContainer.addDragItem(itemRef1);
+    bucketRef.dispatchDragStart({
+      fromContainer,
+      sortableEvent
+    });
+    // bucketRef.cancel();
+    const ESCAPE = 27;
+    const ENTER = 13;
+    const dictEscape: any = { which: ESCAPE, keyCode: ESCAPE, code: ESCAPE };
+    const dictEnter: any = { which: ENTER, keyCode: ENTER, code: ENTER };
+    document.dispatchEvent(new KeyboardEvent('keydown', dictEnter));
+    document.dispatchEvent(new KeyboardEvent('keydown', dictEscape));
+    bucketRef.dispatchDragEnd({
+      toContainer,
+      sortableEvent
+    });
   });
 });

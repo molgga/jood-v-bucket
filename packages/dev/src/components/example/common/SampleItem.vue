@@ -73,4 +73,11 @@ export default defineComponent({
     }
   }
 }
+@media all and (max-width: 768px) {
+  .sample-item {
+    .panel-avatar {
+      display: none;
+    }
+  }
+}
 </style>
