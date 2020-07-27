@@ -64,4 +64,30 @@ export default defineComponent({
     border-left: 1px solid #e0e0e0;
   }
 }
+@media all and (max-width: 768px) {
+  .example-full-panel {
+    .aside {
+      right: 50% !important;
+    }
+    .bside {
+      width: 50% !important;
+    }
+    ::v-deep .bucket-container {
+      padding: 5px;
+    }
+    ::v-deep .panel-wrap {
+      padding-left: 5px;
+      padding-right: 5px;
+      overflow: hidden;
+      .panel-item {
+        .body {
+          display: block;
+          .body-opt {
+            width: auto;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

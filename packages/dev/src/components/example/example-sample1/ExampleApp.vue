@@ -29,13 +29,15 @@
               <jd-bucket-container
                 class="receive-container"
                 v-model="receiverA1.list"
-                :key="[receiverA1.useGhostBar,receiverA1.dropBeforeFilter,receiverA1.max].join('_')"
+                :key="
+                  [receiverA1.useGhostBar, receiverA1.dropBeforeFilter, receiverA1.max].join('_')
+                "
                 :groupName="groupA"
                 :receiver="true"
                 :max="parseInt(receiverA1.max)"
                 :useGhostBar="receiverA1.useGhostBar"
                 :lazyChangeStateDelay="100"
-                :dropBefore="(receiverA1.dropBeforeFilter ? onDropBeforeFilter : null)"
+                :dropBefore="receiverA1.dropBeforeFilter ? onDropBeforeFilter : null"
               >
                 <template #indicate="indicateScope">
                   <custom-bucket-container-indicate
@@ -88,7 +90,11 @@
                 :model="item"
                 :myIndex="index + 1"
               >
-                <sample-item :name="item.name" :description="item.description" :color="item.color" />
+                <sample-item
+                  :name="item.name"
+                  :description="item.description"
+                  :color="item.color"
+                />
               </custom-bucket-item>
             </jd-bucket-container>
           </div>
@@ -121,7 +127,11 @@
                 :model="item"
                 :myIndex="index + 1"
               >
-                <sample-item :name="item.name" :description="item.description" :color="item.color" />
+                <sample-item
+                  :name="item.name"
+                  :description="item.description"
+                  :color="item.color"
+                />
               </custom-bucket-item>
             </jd-bucket-container>
           </div>
@@ -137,7 +147,9 @@
           <div class="body">
             <div class="body-bucket">
               <div class="test-info">
-                <v-chip :ripple="false" :label="true" :small="true">multiple: true (rangeSelection)</v-chip>
+                <v-chip :ripple="false" :label="true" :small="true"
+                  >multiple: true (rangeSelection)</v-chip
+                >
               </div>
               <jd-bucket-container
                 class="sender-container"
