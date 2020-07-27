@@ -49,6 +49,7 @@ export interface IBucketRef {
   joinContainerRef(containerRef: IBucketContainerRef): void;
   unjoinContainerRef(containerRef: IBucketContainerRef): void;
   findContainerRefByElement(element: Element): IBucketContainerRef;
+  cancel(): void;
 }
 
 /**

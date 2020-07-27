@@ -72,7 +72,7 @@ export default defineComponent({
   props: {
     list: {
       type: Array,
-      default: () => []
+      default: (): any[] => []
     },
     groupName: {
       type: String

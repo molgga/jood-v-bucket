@@ -1,6 +1,8 @@
 <template>
   <div class="custom-bucket-remove">
-    <button class="action" @click="onClickRemove">X</button>
+    <v-btn class="action" color="#e85c5c" fab dark x-small @click="onClickRemove">
+      <v-icon class="first">close</v-icon>
+    </v-btn>
   </div>
 </template>
 
@@ -20,7 +22,6 @@ export default defineComponent({
     const { emit } = context;
     const itemRef = useJdBucketItemRef();
     const onClickRemove = () => {
-      console.log('#########');
       emit('remove', { itemRef });
     };
     return {
@@ -32,9 +33,15 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .custom-bucket-remove {
-  height: 100%;
   .action {
-    height: 100%;
+    width: 18px;
+    height: 18px;
+    box-shadow: none;
+    ::v-deep .v-btn__content .v-icon {
+      width: 14px;
+      height: 14px;
+      font-size: 14px;
+    }
   }
 }
 </style>
