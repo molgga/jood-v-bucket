@@ -60,6 +60,8 @@ export default defineComponent({
     right: 0;
     bottom: 0;
     overflow-y: auto;
+    box-sizing: border-box;
+    border-left: 1px solid #e0e0e0;
   }
 }
 </style>

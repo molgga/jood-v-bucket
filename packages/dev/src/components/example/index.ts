@@ -1,49 +1,37 @@
-export const ExampleApps = {
-  '1': {
-    label: 'example1',
-    component: () => import('@/components/example/example1/ExampleApp.vue')
+export const ExampleList = [
+  {
+    key: 'sample1',
+    label: 'sample all #1',
+    component: () => import('@/components/example/example-sample1/ExampleApp.vue')
   },
-  '2': {
-    label: 'example2',
-    component: () => import('@/components/example/example2/ExampleApp.vue')
+  {
+    key: 'selection-drag',
+    label: 'custom selection drag',
+    component: () => import('@/components/example/example-selection-drag/ExampleApp.vue')
   },
-  '3': {
-    label: 'example3',
-    component: () => import('@/components/example/example3/ExampleApp.vue')
+  {
+    key: 'container-indicate',
+    label: 'custom container indicate',
+    component: () => import('@/components/example/example-container-indicate/ExampleApp.vue')
   },
-  '4': {
-    label: 'example4',
-    component: () => import('@/components/example/example4/ExampleApp.vue')
+  {
+    key: 'container-inject',
+    label: 'container inject',
+    component: () => import('@/components/example/example-container-inject/ExampleApp.vue')
   },
-  '5': {
-    label: 'example5',
-    component: () => import('@/components/example/example5/ExampleApp.vue')
-  },
-  '6': {
-    label: 'example6',
-    component: () => import('@/components/example/example6/ExampleApp.vue')
-  },
-  '7': {
-    label: 'example7',
-    component: () => import('@/components/example/example7/ExampleApp.vue')
-  },
-  '8': {
-    label: 'example8',
-    component: () => import('@/components/example/example8/ExampleApp.vue')
-  },
-  '9': {
-    label: 'example9',
-    component: () => import('@/components/example/example9/ExampleApp.vue')
-  },
-  '10': {
-    label: 'example10',
-    component: () => import('@/components/example/example10/ExampleApp.vue')
-  },
-  usecase1: {
-    label: 'usecase',
-    component: () => import('@/components/example/example-usecase1/ExampleApp.vue')
+  {
+    key: 'item-inject',
+    label: 'item inject',
+    component: () => import('@/components/example/example-item-inject/ExampleApp.vue')
   }
-};
+];
+export const ExampleApps = (() => {
+  const hash: any = {};
+  ExampleList.forEach(example => {
+    hash[example.key] = example;
+  });
+  return hash;
+})();
 
 export const exampleLinks = (() => {
   const links = [];

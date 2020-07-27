@@ -66,7 +66,8 @@ export default defineComponent({
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.25);
+    z-index: 10;
   }
   > .insertable {
     position: absolute;
@@ -79,6 +80,7 @@ export default defineComponent({
     pointer-events: none;
     animation: indicate-dash 30s linear;
     animation-iteration-count: infinite;
+    z-index: 10;
     .insert-overlay-svg {
       position: absolute;
       top: 0;

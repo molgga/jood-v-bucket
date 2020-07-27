@@ -1,7 +1,7 @@
 <template>
   <div class="sample-item">
     <div class="panel-avatar">
-      <v-avatar :color="avatarColor" size="36">
+      <v-avatar :color="color" size="36">
         <span class="white--text headline">{{ viewState.avatar }}</span>
       </v-avatar>
     </div>
@@ -19,31 +19,16 @@
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api';
 
-const TEST_COLORS = [
-  '#01a9b4',
-  '#99b898',
-  '#eebb4d',
-  '#709fb0',
-  '#fb7813',
-  '#726a95',
-  '#f54291',
-  '#ff847c',
-  '#35d0ba',
-  '#679b9b',
-  '#bb596b',
-  '#ad6989',
-  '#ffb367',
-  '#7d5a5a',
-  '#565d47'
-];
-
 export default defineComponent({
   props: {
     name: String,
-    description: String
+    description: String,
+    color: {
+      type: String,
+      default: '#cccccc'
+    }
   },
   setup(props) {
-    const avatarColor = TEST_COLORS[Math.round(Math.random() * TEST_COLORS.length - 1)];
     const viewState = computed(() => {
       const name = props.name || '-';
       const description = props.description || '';
@@ -55,7 +40,6 @@ export default defineComponent({
       };
     });
     return {
-      avatarColor,
       viewState
     };
   }

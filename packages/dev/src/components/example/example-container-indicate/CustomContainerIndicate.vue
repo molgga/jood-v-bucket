@@ -1,7 +1,11 @@
 <template>
-  <div class="custom-bucket-container-indicate">
-    <div v-if="isBlock" class="block"><span class="label">block</span></div>
-    <div v-if="isInsertable" class="insertable"><span class="label">insertable</span></div>
+  <div class="custom-container-indicate">
+    <div v-if="isBlock" class="block">
+      <span class="label">block</span>
+    </div>
+    <div v-if="isInsertable" class="insertable">
+      <span class="label">insertable</span>
+    </div>
     <div v-if="isEmpty" class="empty">
       custom-bucket-container-indicate
       <br />
@@ -35,7 +39,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.custom-bucket-container-indicate {
+.custom-container-indicate {
   .label {
     padding: 5px;
     font-size: 11px;
