@@ -21,5 +21,5 @@ module.exports = {
   },
   collectCoverage: true,
   coveragePathIgnorePatterns: ['/tests/', '/utils/'],
-  coverageReporters: ['text', 'html']
+  coverageReporters: ['text']
 };
