@@ -9,7 +9,9 @@
           <v-list-item v-for="(example, index) in exampleLinks" :key="index" link :to="example.to">
             <v-list-item-content>
               <v-list-item-title>{{ example.label }}</v-list-item-title>
-              <v-list-item-subtitle v-if="example.description">{{ example.description }}</v-list-item-subtitle>
+              <v-list-item-subtitle v-if="example.description">{{
+                example.description
+              }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -20,9 +22,33 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="app-title">@jood/v-bucket</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon @click="onGoDocument">
-        <v-icon>library_books</v-icon>
-      </v-btn>
+
+      <v-tooltip bottom>
+        <span>Github</span>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on" @click="onGoGithub">
+            <v-icon>code</v-icon>
+          </v-btn>
+        </template>
+      </v-tooltip>
+
+      <v-tooltip bottom>
+        <span>NPM</span>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on" @click="onGoNpm">
+            <v-icon>move_to_inbox</v-icon>
+          </v-btn>
+        </template>
+      </v-tooltip>
+
+      <v-tooltip bottom>
+        <span>Document</span>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-bind="attrs" v-on="on" icon @click="onGoDocument">
+            <v-icon>library_books</v-icon>
+          </v-btn>
+        </template>
+      </v-tooltip>
     </v-app-bar>
 
     <v-main>
@@ -42,12 +68,26 @@ export default defineComponent({
     const drawer: any = null;
 
     const onGoDocument = () => {
-      window.open('https://molgga.github.io/jood-v-bucket/documents');
+      openTo('https://molgga.github.io/jood-v-bucket/documents');
+    };
+
+    const onGoGithub = () => {
+      openTo('https://github.com/molgga/jood-v-bucket');
+    };
+
+    const onGoNpm = () => {
+      openTo('https://www.npmjs.com/package/@jood/v-bucket');
+    };
+
+    const openTo = (url: string) => {
+      window.open(url);
     };
 
     return {
       drawer,
       exampleLinks,
+      onGoGithub,
+      onGoNpm,
       onGoDocument
     };
   }

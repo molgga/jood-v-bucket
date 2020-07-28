@@ -10,6 +10,8 @@ Vue bucket 기능 UI
 ![NPM download](https://img.shields.io/npm/dt/@jood/v-bucket)
 ![NPM bundle size](https://img.shields.io/bundlephobia/min/@jood/v-bucket)
 
+***
+
 ## Get started
 
 ### npm install

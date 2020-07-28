@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <component :is="exampleState.component" />
+  <div class="example-view">
+    <template v-if="exampleState.component">
+      <component :is="exampleState.component" />
+    </template>
+    <template v-else>
+      -
+    </template>
   </div>
 </template>
 
@@ -12,7 +17,7 @@ export default defineComponent({
   props: {
     example: {
       type: String,
-      default: '1'
+      default: ''
     }
   },
   setup(props) {
@@ -22,8 +27,6 @@ export default defineComponent({
       let component: any;
       if (importComponent[exampleKey]) {
         component = importComponent[exampleKey].component;
-      } else {
-        component = ExampleApps['1'];
       }
       return {
         component
@@ -37,20 +40,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.box-wrap {
-  display: flex;
-  .box {
-    flex: 1;
-  }
-}
-.test-item {
-  margin: 2px;
-  padding: 10px;
-  border: 1px solid #eeeeee;
-  border-radius: 4px;
-  &.is-selected {
-    background-color: rgba(255, 0, 0, 0.2);
-  }
-}
-</style>
+<style lang="scss" scoped></style>
