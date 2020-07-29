@@ -106,7 +106,8 @@ export default defineComponent({
       default: () => ({
         animation: 200,
         delay: 100,
-        delayOnTouchOnly: true
+        delayOnTouchOnly: true,
+        touchStartThreshold: 20
       })
     },
     useGhostBar: {
