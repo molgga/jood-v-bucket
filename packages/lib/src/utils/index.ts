@@ -1,4 +1,4 @@
-interface IntercentRange {
+interface IntersectRange {
   start: number;
   end: number;
 }
@@ -19,10 +19,10 @@ export const createUid = () => {
 /**
  * 축 교차점 비교
  * one 의 { start, end } 와 other 의 { start, end } 를 비교
- * @param one {IntercentRange}
- * @param other {IntercentRange}
+ * @param one {IntersectRange}
+ * @param other {IntersectRange}
  */
-export const intersect = (one: IntercentRange, other: IntercentRange) => {
+export const intersect = (one: IntersectRange, other: IntersectRange) => {
   if (one.start >= other.end || other.start >= one.end) {
     return { start: 0, end: 0 };
   }
@@ -42,10 +42,10 @@ export const intersect = (one: IntercentRange, other: IntercentRange) => {
  * console.log(intercet({ start: A.x, end: A.x + A.w }, { start: B.x, end: B.x + B.w })) // x 축 교차됨
  * console.log(intercet({ start: A.y, end: A.y + A.h }, { start: B.y, end: B.y + B.h })) // y 축 교차하지 않음
  * console.log('A 와 B 는 겹치지 않음')
- * @param one {IntercentRange}
- * @param other {IntercentRange}
+ * @param one {IntersectRange}
+ * @param other {IntersectRange}
  */
-export const isIntersect = (one: IntercentRange, other: IntercentRange) => {
+export const isIntersect = (one: IntersectRange, other: IntersectRange) => {
   const sect = intersect(one, other);
   return sect.start !== 0 || sect.end !== 0;
 };
