@@ -67,5 +67,14 @@
     "url": "https://github.com/molgga/jood-v-bucket/issues",
     "email": "molgga84@gmail.com"
   },
-  "homepage": "https://molgga.github.io/jood-v-bucket"
+  "homepage": "https://molgga.github.io/jood-v-bucket",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "vue",
+    "draggable",
+    "dragdrop",
+    "transfer",
+    "bucket"
+  ]
 }
