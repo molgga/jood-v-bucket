@@ -105,7 +105,7 @@ export default defineComponent({
       type: Object,
       default: () => ({
         animation: 200,
-        delay: 100,
+        delay: 10,
         delayOnTouchOnly: true,
         touchStartThreshold: 20
       })
