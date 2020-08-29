@@ -50,115 +50,39 @@
 
     <section class="readme">
         <article><h1>@jood/v-bucket</h1>
-<p>Vue bucket 기능 UI</p>
-<hr>
-<p><img src="https://travis-ci.org/molgga/jood-v-bucket.svg?branch=master" alt="TRAVIS">
+<p>It provides model management function between containers by drag &amp; drop. <br>
+The goal is to provide a foundation for data communication and progressive control between component groups by drag &amp; drop.</p>
+<p>This is a dedicated package for Vue using Vue, composition-api, rxjs, draggable.
+(When Vue3 is supported, the composition-api dependency will be removed.)</p>
+<blockquote>
+<p><strong><a href="https://molgga.github.io/jood-v-bucket">Demo</a></strong>
+| <strong><a href="https://github.com/molgga/jood-v-bucket/tree/master/packages/dev/src/components/example">Demo source code</a></strong>
+| <strong><a href="https://molgga.github.io/jood-v-bucket/documents">Documentation</a></strong>
+| <strong><a href="https://github.com/molgga/jood-v-bucket">Github</a></strong>
+| <strong><a href="https://www.npmjs.com/package/@jood/v-bucket">NPM</a></strong>
+<br>
+<br>
+<img src="https://img.shields.io/static/v1.svg?label=&amp;style=flat-square&amp;logoColor=white&amp;color=4fc08d&amp;logo=vue.js&amp;message=Vue" alt="Vue">
+<img src="https://img.shields.io/static/v1.svg?label=&amp;style=flat-square&amp;logoColor=white&amp;color=3178c6&amp;logo=typescript&amp;message=Typescript" alt="Typescript">
+<img src="https://travis-ci.org/molgga/jood-v-bucket.svg?branch=master" alt="TRAVIS">
 <img src="https://img.shields.io/npm/v/@jood/v-bucket.svg" alt="NPM version">
 <img src="https://img.shields.io/npm/l/@jood/v-bucket" alt="NPM license">
 <img src="https://img.shields.io/npm/dt/@jood/v-bucket" alt="NPM download">
 <img src="https://img.shields.io/bundlephobia/min/@jood/v-bucket" alt="NPM bundle size"></p>
+</blockquote>
 <hr>
-<h2>Get started</h2>
-<h3>npm install</h3>
-<pre class="prettyprint source lang-javascript"><code>$ npm install @jood/v-bucket
-</code></pre>
-<h3>main.ts</h3>
-<pre class="prettyprint source lang-javascript"><code>import '@jood/v-bucket/dist/v-bucket.css';
-</code></pre>
-<h3>App.vue</h3>
-<pre class="prettyprint source lang-javascript"><code>&lt;template>
-  &lt;div>
-    &lt;jd-bucket-selection-indicate /> &lt;!-- selection, drag ui -->
-    &lt;some-view />
-  &lt;/div>
-&lt;/template>
-
-&lt;script lang=&quot;ts&quot;>
-import {
-  provideJdBucketRef,
-  JdBucketSelectionIndicate,
-} from '@jood/v-bucket';
-import SomeView from './SomeView.vue';
-export default {
-  components: {
-    JdBucketSelectionIndicate,
-    SomeView,
-  },
-  setup() {
-    provideJdBucketRef(); // bucket provider
-    return {}
-  }
-}
-&lt;/script>
-</code></pre>
-<h3>SomeView.vue</h3>
-<pre class="prettyprint source lang-javascript"><code>&lt;template>
-  &lt;div>
-    &lt;div>
-      &lt;h2>receiver&lt;/h2>
-      &lt;jd-bucket-container
-        v-model=&quot;receiverA1.list&quot;
-        :groupName=&quot;groupA&quot;
-        :receiver=&quot;true&quot;>
-        &lt;jd-bucket-item
-          v-for=&quot;(item, index) in receiverA1.list&quot;
-          :key=&quot;`${index}_${item.id}`&quot;
-          :model=&quot;item&quot;
-        >{{ item }}&lt;/jd-bucket-item>
-      &lt;/jd-bucket-container>
-    &lt;/div>
-    &lt;div>
-      &lt;h2>sender&lt;/h2>
-      &lt;jd-bucket-container 
-        v-model=&quot;senderA1.list&quot; 
-        :groupName=&quot;groupA&quot; 
-        :receiver=&quot;false&quot;>
-        &lt;jd-bucket-item
-          v-for=&quot;item in senderA1.list&quot;
-          :key=&quot;item.id&quot;
-          :model=&quot;item&quot;
-        >{{ item }}&lt;/jd-bucket-item>
-      &lt;/jd-bucket-container>
-    &lt;/div>
-  &lt;/div>
-&lt;/template>
-&lt;script lang=&quot;ts&quot;>
-import {
-  JdBucketContainer,
-  JdBucketItem
-} from '@jood/v-bucket';
-
-export default {
-  components: {
-    JdBucketContainer,
-    JdBucketItem,
-  },
-  setup() {
-    const groupA = 'GROUP_A';
-    const receiverA1 = reactive&lt;{ list: any[] }>({
-      list: [{id:1}]
-    });
-    const senderA1 = reactive&lt;{ list: any[] }>({
-      list: [{id:1}, {id:2}, {id:3}, {id:4}, {id:5}]
-    });
-    return {
-      groupA,
-      receiverA1,
-      senderA1,
-    };
-  }
-}
-&lt;/script>
-</code></pre>
-<hr>
-<h3>See</h3>
-<ul>
-<li><a href="https://molgga.github.io/jood-v-bucket">Example(web)</a>.</li>
-<li><a href="https://github.com/molgga/jood-v-bucket/tree/master/packages/dev/src/components/example">Example(source)</a>.</li>
-<li><a href="https://github.com/molgga/jood-v-bucket">Github</a>.</li>
-<li><a href="https://www.npmjs.com/package/@jood/v-bucket">NPM</a>.</li>
-<li><a href="https://molgga.github.io/jood-v-bucket/documents">Doc</a>.</li>
-</ul></article>
+<table style="table-layout: fixed; overflow-wrap: break-word;">
+  <tbody>
+    <tr>
+      <td>
+        <img src="https://user-images.githubusercontent.com/2731262/90954882-91865400-e4b3-11ea-8e28-920a165c499a.gif" alt="@jood/v-bucket demo 1" style="max-width: 100%;" />
+      </td>
+      <td>
+        <img src="https://user-images.githubusercontent.com/2731262/90954928-e924bf80-e4b3-11ea-9a98-75fe7cd69355.gif" alt="@jood/v-bucket demo 2" style="max-width: 100%;" />
+      </td>
+    </tr>
+  </tbody>
+</table></article>
     </section>
 
 
@@ -171,7 +95,7 @@ export default {
 <br class="clear">
 
 <footer>
-    Documentation generated at Fri Jul 31 2020 01:56:56 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Sat Aug 29 2020 10:48:50 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>
