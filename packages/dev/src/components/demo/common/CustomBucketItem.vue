@@ -40,7 +40,7 @@ import {
   useJdBucketContainerRef,
   useJdBucketItemRef,
   IBucketItemRef
-} from '@/lib-package';
+} from '@jood/v-bucket';
 import CustomBucketRemove from './CustomBucketRemove.vue';
 import CustomBucketMove from './CustomBucketMove.vue';
 

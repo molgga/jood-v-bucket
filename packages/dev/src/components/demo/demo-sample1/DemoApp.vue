@@ -90,11 +90,7 @@
                 :model="item"
                 :myIndex="index + 1"
               >
-                <sample-item
-                  :name="item.name"
-                  :description="item.description"
-                  :color="item.color"
-                />
+                <sample-item :name="item.name" :description="item.description" :color="item.color" />
               </custom-bucket-item>
             </jd-bucket-container>
           </div>
@@ -127,11 +123,7 @@
                 :model="item"
                 :myIndex="index + 1"
               >
-                <sample-item
-                  :name="item.name"
-                  :description="item.description"
-                  :color="item.color"
-                />
+                <sample-item :name="item.name" :description="item.description" :color="item.color" />
               </custom-bucket-item>
             </jd-bucket-container>
           </div>
@@ -147,9 +139,7 @@
           <div class="body">
             <div class="body-bucket">
               <div class="test-info">
-                <v-chip :ripple="false" :label="true" :small="true"
-                  >multiple: true (rangeSelection)</v-chip
-                >
+                <v-chip :ripple="false" :label="true" :small="true">multiple: true (rangeSelection)</v-chip>
               </div>
               <jd-bucket-container
                 class="sender-container"
@@ -221,12 +211,12 @@ import {
   JdBucketContainer,
   JdBucketItem,
   BucketDropBeforeParams
-} from '@/lib-package';
-import ExampleSplitPanel from '@/components/example/common/ExampleSplitPanel.vue';
-import CustomBucketContainerIndicate from '@/components/example/common/CustomBucketContainerIndicate.vue';
-import CustomBucketItem from '@/components/example/common/CustomBucketItem.vue';
-import SampleItem from '@/components/example/common/SampleItem.vue';
-import { getTestList } from '@/components/example/common/testModel';
+} from '@jood/v-bucket';
+import ExampleSplitPanel from '@/components/demo/common/ExampleSplitPanel.vue';
+import CustomBucketContainerIndicate from '@/components/demo/common/CustomBucketContainerIndicate.vue';
+import CustomBucketItem from '@/components/demo/common/CustomBucketItem.vue';
+import SampleItem from '@/components/demo/common/SampleItem.vue';
+import { getTestList } from '@/components/demo/common/testModel';
 
 export default defineComponent({
   components: {

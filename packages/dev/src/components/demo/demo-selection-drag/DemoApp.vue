@@ -91,13 +91,13 @@ import {
   JdBucketContainer,
   JdBucketItem,
   BucketDropBeforeParams
-} from '@/lib-package';
-import ExampleSplitPanel from '@/components/example/common/ExampleSplitPanel.vue';
-import CustomBucketContainerIndicate from '@/components/example/common/CustomBucketContainerIndicate.vue';
-import CustomBucketItem from '@/components/example/common/CustomBucketItem.vue';
-import SampleItem from '@/components/example/common/SampleItem.vue';
+} from '@jood/v-bucket';
+import ExampleSplitPanel from '@/components/demo/common/ExampleSplitPanel.vue';
+import CustomBucketContainerIndicate from '@/components/demo/common/CustomBucketContainerIndicate.vue';
+import CustomBucketItem from '@/components/demo/common/CustomBucketItem.vue';
+import SampleItem from '@/components/demo/common/SampleItem.vue';
 import CustomSelectionDrag from './CustomSelectionDrag.vue';
-import { getTestList } from '@/components/example/common/testModel';
+import { getTestList } from '@/components/demo/common/testModel';
 
 export default defineComponent({
   components: {

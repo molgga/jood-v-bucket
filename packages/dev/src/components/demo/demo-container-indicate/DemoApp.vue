@@ -15,12 +15,16 @@
                 v-model="receiverA1.list"
                 :groupName="groupA"
                 :receiver="true"
-                :max="5"
+                :max="-1"
                 :useGhostBar="true"
                 :lazyChangeStateDelay="100"
               >
-                <template #header>
-                  <receiver-header />
+                <template #indicate="indicateScope">
+                  <custom-container-indicate
+                    :isBlock="indicateScope.state.isBlock"
+                    :isInsertable="indicateScope.state.isInsertable"
+                    :isEmpty="indicateScope.state.isEmpty"
+                  />
                 </template>
                 <custom-bucket-item
                   v-for="(item, index) in receiverA1.list"
@@ -54,9 +58,6 @@
                 :groupName="groupA"
                 :receiver="false"
               >
-                <template #header>
-                  <sender-header />
-                </template>
                 <custom-bucket-item
                   v-for="(item, index) in senderA1.list"
                   :key="item.uid"
@@ -86,13 +87,12 @@ import {
   JdBucketContainer,
   JdBucketItem,
   BucketDropBeforeParams
-} from '@/lib-package';
-import ExampleSplitPanel from '@/components/example/common/ExampleSplitPanel.vue';
-import CustomBucketItem from '@/components/example/common/CustomBucketItem.vue';
-import SampleItem from '@/components/example/common/SampleItem.vue';
-import SenderHeader from './SenderHeader.vue';
-import ReceiverHeader from './ReceiverHeader.vue';
-import { getTestList } from '@/components/example/common/testModel';
+} from '@jood/v-bucket';
+import ExampleSplitPanel from '@/components/demo/common/ExampleSplitPanel.vue';
+import CustomBucketItem from '@/components/demo/common/CustomBucketItem.vue';
+import SampleItem from '@/components/demo/common/SampleItem.vue';
+import CustomContainerIndicate from './CustomContainerIndicate.vue';
+import { getTestList } from '@/components/demo/common/testModel';
 
 export default defineComponent({
   components: {
@@ -102,8 +102,7 @@ export default defineComponent({
     ExampleSplitPanel,
     SampleItem,
     CustomBucketItem,
-    SenderHeader,
-    ReceiverHeader
+    CustomContainerIndicate
   },
   setup() {
     provideJdBucketRef();

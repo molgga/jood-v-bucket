@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, watchEffect } from '@vue/composition-api';
-import { BucketDragSelectionState } from '@/lib-package';
+import { BucketDragSelectionState } from '@jood/v-bucket';
 
 interface IProps {
   dragState: BucketDragSelectionState;
