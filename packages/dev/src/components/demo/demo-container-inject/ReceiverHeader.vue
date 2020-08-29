@@ -22,7 +22,7 @@
 <script lang="ts">
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted, computed } from '@vue/composition-api';
-import { useJdBucketContainerRef } from '@/lib-package';
+import { useJdBucketContainerRef } from '@jood/v-bucket';
 
 export default defineComponent({
   setup() {

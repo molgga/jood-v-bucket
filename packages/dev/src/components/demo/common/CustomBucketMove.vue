@@ -76,7 +76,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api';
-import { useJdBucketItemRef } from '@/lib-package';
+import { useJdBucketItemRef } from '@jood/v-bucket';
 
 export default defineComponent({
   components: {},

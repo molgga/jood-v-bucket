@@ -2,23 +2,26 @@
   <v-app id="app">
     <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
       <v-list dense>
+        <v-list-item to="/">
+          <v-list-item-title>Getting started</v-list-item-title>
+        </v-list-item>
         <v-list-group value="true">
           <template v-slot:activator>
-            <v-list-item-title>Examples</v-list-item-title>
+            <v-list-item-title>Demo</v-list-item-title>
           </template>
-          <v-list-item v-for="(example, index) in exampleLinks" :key="index" link :to="example.to">
+          <v-list-item v-for="(demo, index) in demoLinks" :key="index" link :to="demo.to">
             <v-list-item-content>
-              <v-list-item-title>{{ example.label }}</v-list-item-title>
-              <v-list-item-subtitle v-if="example.description">{{
-                example.description
-              }}</v-list-item-subtitle>
+              <v-list-item-title>{{ demo.label }}</v-list-item-title>
+              <v-list-item-subtitle v-if="demo.description">
+                {{ demo.description }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue darken-2" app dark>
+    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app dark class="app-bar">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="app-title">@jood/v-bucket</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -61,7 +64,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api';
-import { exampleLinks } from '@/components/example';
+import { demoLinks } from '@/components/demo';
 
 export default defineComponent({
   setup() {
@@ -85,7 +88,7 @@ export default defineComponent({
 
     return {
       drawer,
-      exampleLinks,
+      demoLinks,
       onGoGithub,
       onGoNpm,
       onGoDocument
@@ -94,6 +97,14 @@ export default defineComponent({
 });
 </script>
 
+<style>
+body {
+  font-size: 15px;
+}
+body .v-application a {
+  color: #2a9e64;
+}
+</style>
 <style lang="scss" scoped>
 .app-title {
   font-weight: bold;
@@ -104,6 +115,13 @@ export default defineComponent({
 .app-body {
   display: flex;
   width: 100%;
+  padding-top: 40px;
+  padding-bottom: 100px;
+  box-sizing: border-box;
   align-self: stretch;
+}
+.app-bar {
+  box-shadow: none !important;
+  background-color: #41af7d !important;
 }
 </style>

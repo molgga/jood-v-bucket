@@ -19,12 +19,18 @@
                 :useGhostBar="true"
                 :lazyChangeStateDelay="100"
               >
-                <template #indicate="indicateScope">
-                  <custom-container-indicate
-                    :isBlock="indicateScope.state.isBlock"
-                    :isInsertable="indicateScope.state.isInsertable"
-                    :isEmpty="indicateScope.state.isEmpty"
-                  />
+                <template #header>
+                  <div class="test-header">
+                    <v-text-field
+                      v-model="receiverA1.displayMax"
+                      hide-details
+                      label="Test displayMax"
+                      placeholder="test displayMax"
+                      :min="-1"
+                      :max="10"
+                      type="number"
+                    />
+                  </div>
                 </template>
                 <custom-bucket-item
                   v-for="(item, index) in receiverA1.list"
@@ -32,11 +38,7 @@
                   :model="item"
                   :myIndex="index + 1"
                 >
-                  <sample-item
-                    :name="item.name"
-                    :description="item.description"
-                    :color="item.color"
-                  />
+                  <some-item :expectDisplayMax="parseInt(receiverA1.displayMax)" :index="index" />
                 </custom-bucket-item>
               </jd-bucket-container>
             </div>
@@ -87,12 +89,12 @@ import {
   JdBucketContainer,
   JdBucketItem,
   BucketDropBeforeParams
-} from '@/lib-package';
-import ExampleSplitPanel from '@/components/example/common/ExampleSplitPanel.vue';
-import CustomBucketItem from '@/components/example/common/CustomBucketItem.vue';
-import SampleItem from '@/components/example/common/SampleItem.vue';
-import CustomContainerIndicate from './CustomContainerIndicate.vue';
-import { getTestList } from '@/components/example/common/testModel';
+} from '@jood/v-bucket';
+import ExampleSplitPanel from '@/components/demo/common/ExampleSplitPanel.vue';
+import CustomBucketItem from '@/components/demo/common/CustomBucketItem.vue';
+import SampleItem from '@/components/demo/common/SampleItem.vue';
+import SomeItem from './SomeItem.vue';
+import { getTestList } from '@/components/demo/common/testModel';
 
 export default defineComponent({
   components: {
@@ -102,13 +104,14 @@ export default defineComponent({
     ExampleSplitPanel,
     SampleItem,
     CustomBucketItem,
-    CustomContainerIndicate
+    SomeItem
   },
   setup() {
     provideJdBucketRef();
 
     const groupA = 'GROUP_A';
     const receiverA1 = reactive<any>({
+      displayMax: 2,
       list: []
     });
     const senderA1 = reactive<any>({
@@ -171,6 +174,10 @@ export default defineComponent({
     width: 100%;
     box-sizing: border-box;
     background-color: #ffffff;
+    .test-header {
+      padding: 10px 20px;
+      margin-bottom: -20px;
+    }
     ::v-deep .bucket-draggable {
       min-height: 200px;
     }
