@@ -22,3 +22,16 @@ This is a dedicated package for Vue using Vue, composition-api, rxjs, draggable.
 ![NPM bundle size](https://img.shields.io/bundlephobia/min/@jood/v-bucket)
 
 ***
+
+<table style="table-layout: fixed; overflow-wrap: break-word;">
+  <tbody>
+    <tr>
+      <td>
+        <img src="https://user-images.githubusercontent.com/2731262/90954882-91865400-e4b3-11ea-8e28-920a165c499a.gif" alt="@jood/v-bucket demo 1" style="max-width: 100%;" />
+      </td>
+      <td>
+        <img src="https://user-images.githubusercontent.com/2731262/90954928-e924bf80-e4b3-11ea-9a98-75fe7cd69355.gif" alt="@jood/v-bucket demo 2" style="max-width: 100%;" />
+      </td>
+    </tr>
+  </tbody>
+</table>
