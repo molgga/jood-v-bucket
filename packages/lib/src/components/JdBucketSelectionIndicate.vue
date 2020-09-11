@@ -28,7 +28,7 @@ import { JdBucketSelectionDrag } from '../composables/JdBucketSelectionDrag';
 import { JdBucketSelectionRange } from '../composables/JdBucketSelectionRange';
 import { isTouchable } from '../utils';
 
-export default defineComponent({
+export default {
   setup() {
     const bucketRef = useJdBucketRef();
     bucketRef.setFallbackIndicate(true);
@@ -191,7 +191,7 @@ export default defineComponent({
       rangeState
     };
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>

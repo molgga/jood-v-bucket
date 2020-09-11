@@ -1,76 +1,9 @@
 <template>
   <div class="custom-bucket-move">
-    <v-tooltip top>
-      <span>first</span>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          v-bind="attrs"
-          v-on="on"
-          class="action"
-          :color="iconColor"
-          fab
-          dark
-          x-small
-          @click="onClickMove('first')"
-        >
-          <v-icon class="first">first_page</v-icon>
-        </v-btn>
-      </template>
-    </v-tooltip>
-
-    <v-tooltip top>
-      <span>up</span>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          v-bind="attrs"
-          v-on="on"
-          class="action"
-          :color="iconColor"
-          fab
-          dark
-          x-small
-          @click="onClickMove('up')"
-        >
-          <v-icon class="up">expand_less</v-icon>
-        </v-btn>
-      </template>
-    </v-tooltip>
-
-    <v-tooltip top>
-      <span>down</span>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          v-bind="attrs"
-          v-on="on"
-          class="action"
-          :color="iconColor"
-          fab
-          dark
-          x-small
-          @click="onClickMove('down')"
-        >
-          <v-icon class="down">expand_more</v-icon>
-        </v-btn>
-      </template>
-    </v-tooltip>
-
-    <v-tooltip top>
-      <span>last</span>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          v-bind="attrs"
-          v-on="on"
-          class="action"
-          :color="iconColor"
-          fab
-          dark
-          x-small
-          @click="onClickMove('last')"
-        >
-          <v-icon class="last">first_page</v-icon>
-        </v-btn>
-      </template>
-    </v-tooltip>
+    <button class="btn" title="first" @click="onClickMove('first')">first</button>
+    <button class="btn" title="up" @click="onClickMove('up')">up</button>
+    <button class="btn" title="down" @click="onClickMove('down')">down</button>
+    <button class="btn" title="last" @click="onClickMove('last')">last</button>
   </div>
 </template>
 

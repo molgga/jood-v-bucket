@@ -23,7 +23,6 @@
     </div>
     <div v-if="isEmpty" class="empty">
       <div class="item">
-        <v-icon class="icon">highlight_alt</v-icon>
         <div class="desc">오른쪽 아이템을 여기에 넣으세요!</div>
       </div>
     </div>

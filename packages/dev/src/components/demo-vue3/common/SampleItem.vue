@@ -1,9 +1,7 @@
 <template>
   <div class="sample-item">
     <div class="panel-avatar">
-      <v-avatar :color="color" size="36">
-        <span class="white--text headline">{{ viewState.avatar }}</span>
-      </v-avatar>
+      {{ viewState.avatar }}
     </div>
     <div class="panel-info">
       <div class="name">

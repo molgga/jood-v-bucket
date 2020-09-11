@@ -1,75 +1,26 @@
 <template>
-  <v-app id="app">
-    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
-      <v-list dense>
-        <v-list-item to="/">
-          <v-list-item-title>Getting started</v-list-item-title>
-        </v-list-item>
-        <v-list-group value="true">
-          <template v-slot:activator>
-            <v-list-item-title>Demo</v-list-item-title>
-          </template>
-          <v-list-item v-for="(demo, index) in demoLinks" :key="index" link :to="demo.to">
-            <v-list-item-content>
-              <v-list-item-title>{{ demo.label }}</v-list-item-title>
-              <v-list-item-subtitle v-if="demo.description">
-                {{ demo.description }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-group>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app dark class="app-bar">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="app-title">@jood/v-bucket</v-toolbar-title>
-      <v-spacer></v-spacer>
-
-      <v-tooltip bottom>
-        <span>Github</span>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on" @click="onGoGithub">
-            <v-icon>code</v-icon>
-          </v-btn>
-        </template>
-      </v-tooltip>
-
-      <v-tooltip bottom>
-        <span>NPM</span>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on" @click="onGoNpm">
-            <v-icon>move_to_inbox</v-icon>
-          </v-btn>
-        </template>
-      </v-tooltip>
-
-      <v-tooltip bottom>
-        <span>Document</span>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on" icon @click="onGoDocument">
-            <v-icon>library_books</v-icon>
-          </v-btn>
-        </template>
-      </v-tooltip>
-    </v-app-bar>
-
-    <v-main>
-      <v-container class="fill-height app-body-container">
-        <router-view class="app-body" />
-      </v-container>
-    </v-main>
-  </v-app>
+  <div>
+    <demo-layout
+      title="@jood/v-bucket"
+      @goGithub="onGoGithub"
+      @goNpm="onGoNpm"
+      @goDoc="onGoDocument"
+    >
+      <template #menu>
+        <nav class="menu-wrap">
+          <demo-menu :menuList="menuList" />
+        </nav>
+      </template>
+      <router-view class="app-body" />
+    </demo-layout>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { demoLinks } from '@/components/demo';
+import { demoLinks } from '@/components/demo-vue3';
 
-export default defineComponent({
+export default {
   setup() {
-    const drawer: any = null;
-
     const onGoDocument = () => {
       openTo('https://molgga.github.io/jood-v-bucket/documents');
     };
@@ -86,15 +37,23 @@ export default defineComponent({
       window.open(url);
     };
 
+    const menuList = [
+      {
+        to: '/',
+        label: 'Getting started'
+      },
+      ...demoLinks
+    ];
+
     return {
-      drawer,
+      menuList,
       demoLinks,
       onGoGithub,
       onGoNpm,
       onGoDocument
     };
   }
-});
+};
 </script>
 
 <style>

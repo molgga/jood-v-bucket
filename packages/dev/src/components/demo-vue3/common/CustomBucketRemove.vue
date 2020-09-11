@@ -1,8 +1,8 @@
 <template>
   <div class="custom-bucket-remove">
-    <v-btn class="action" color="#e85c5c" fab dark x-small @click="onClickRemove">
-      <v-icon class="first">close</v-icon>
-    </v-btn>
+    <demo-button class="action" color="#e85c5c" @click="onClickRemove">
+      <i class="icon material-icons">close</i>
+    </demo-button>
   </div>
 </template>
 

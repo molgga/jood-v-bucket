@@ -11,18 +11,22 @@
           <div class="body">
             <div class="body-opt">
               <div>
-                <v-switch v-model="receiverA1.useGhostBar" label="use indicate bar" />
-                <v-switch v-model="receiverA1.dropBeforeFilter" label="custom duplicate filter" />
-
-                <v-text-field
-                  v-model="receiverA1.max"
-                  hide-details
-                  label="max"
-                  placeholder="Placeholder"
-                  :min="-1"
-                  :max="10"
-                  type="number"
-                />
+                <label class="box-label">
+                  <input type="checkbox" v-model="receiverA1.useGhostBar" />
+                  <span class="label">use indicate bar</span>
+                </label>
+              </div>
+              <div>
+                <label class="box-label">
+                  <input type="checkbox" v-model="receiverA1" />
+                  <span class="label">custom duplicate filter</span>
+                </label>
+              </div>
+              <div>
+                <label class="box-label">
+                  <span class="dt">max</span>
+                  <input type="number" v-model="receiverA1.max" />
+                </label>
               </div>
             </div>
             <div class="body-bucket">
@@ -90,7 +94,11 @@
                 :model="item"
                 :myIndex="index + 1"
               >
-                <sample-item :name="item.name" :description="item.description" :color="item.color" />
+                <sample-item
+                  :name="item.name"
+                  :description="item.description"
+                  :color="item.color"
+                />
               </custom-bucket-item>
             </jd-bucket-container>
           </div>
@@ -123,7 +131,11 @@
                 :model="item"
                 :myIndex="index + 1"
               >
-                <sample-item :name="item.name" :description="item.description" :color="item.color" />
+                <sample-item
+                  :name="item.name"
+                  :description="item.description"
+                  :color="item.color"
+                />
               </custom-bucket-item>
             </jd-bucket-container>
           </div>
@@ -138,9 +150,7 @@
           </div>
           <div class="body">
             <div class="body-bucket">
-              <div class="test-info">
-                <v-chip :ripple="false" :label="true" :small="true">multiple: true (rangeSelection)</v-chip>
-              </div>
+              <div class="test-info">multiple: true (rangeSelection)</div>
               <jd-bucket-container
                 class="sender-container"
                 v-model="senderA1.list"
@@ -172,9 +182,7 @@
           </div>
           <div class="body">
             <div class="body-bucket">
-              <div class="test-info">
-                <v-chip :ripple="false" :label="true" :small="true">multiple: false</v-chip>
-              </div>
+              <div class="test-info">multiple: false</div>
               <jd-bucket-container
                 class="sender-container"
                 v-model="senderB1.list"
@@ -212,11 +220,11 @@ import {
   JdBucketItem,
   BucketDropBeforeParams
 } from '@jood/v-bucket';
-import ExampleSplitPanel from '@/components/demo/common/ExampleSplitPanel.vue';
-import CustomBucketContainerIndicate from '@/components/demo/common/CustomBucketContainerIndicate.vue';
-import CustomBucketItem from '@/components/demo/common/CustomBucketItem.vue';
-import SampleItem from '@/components/demo/common/SampleItem.vue';
-import { getTestList } from '@/components/demo/common/testModel';
+import ExampleSplitPanel from '../common/ExampleSplitPanel.vue';
+import CustomBucketContainerIndicate from '../common/CustomBucketContainerIndicate.vue';
+import CustomBucketItem from '../common/CustomBucketItem.vue';
+import SampleItem from '../common/SampleItem.vue';
+import { getTestList } from '../common/testModel';
 
 export default defineComponent({
   components: {
@@ -344,6 +352,14 @@ export default defineComponent({
     width: 100%;
     box-sizing: border-box;
     background-color: #ffffff;
+  }
+}
+.box-label {
+  .dt {
+    display: block;
+  }
+  .label {
+    padding: 10px;
   }
 }
 </style>
