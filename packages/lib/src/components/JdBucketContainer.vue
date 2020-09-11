@@ -37,7 +37,8 @@
 </template>
 
 <script lang="ts">
-import draggable from 'vuedraggable';
+// @ts-ignore
+import { VueDraggableNext } from 'vue-draggable-next';
 import { Subscription } from 'rxjs';
 import { defineComponent, computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 import {
@@ -47,14 +48,14 @@ import {
   BucketEvent,
   BucketSortableEvent,
   BucketDragDrop
-} from '../composables';
+} from '../modules';
 import { isTouchable } from '../utils';
 import JdBucketContainerIndicate from './JdBucketContainerIndicate.vue';
 
 export default defineComponent({
   name: 'JdBucketContainer',
   components: {
-    draggable,
+    draggable: VueDraggableNext,
     JdBucketContainerIndicate
   },
   model: {

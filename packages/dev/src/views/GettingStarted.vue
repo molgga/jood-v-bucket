@@ -20,15 +20,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import PreviewCode from '@/components/common/PreviewCode.vue';
-import PanelDevider from '@/components/common/PanelDevider.vue';
 import Codes from '@/codes/getting-started';
 
 export default defineComponent({
-  components: {
-    PreviewCode,
-    PanelDevider
-  },
   setup() {
     return {
       Codes

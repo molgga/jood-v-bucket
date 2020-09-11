@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useJdBucketContainerRef, useJdBucketItemRef } from '../composables';
+import { useJdBucketContainerRef, useJdBucketItemRef } from '../modules';
 
 export default defineComponent({
   name: 'JdBucketRemove',

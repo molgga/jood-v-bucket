@@ -23,9 +23,9 @@ import {
   IBucketContainerRef,
   BucketDragSelectionState,
   BucketRangeSelectionState
-} from '../composables';
-import { JdBucketSelectionDrag } from '../composables/JdBucketSelectionDrag';
-import { JdBucketSelectionRange } from '../composables/JdBucketSelectionRange';
+} from '../modules';
+import { JdBucketSelectionDrag } from '../modules/JdBucketSelectionDrag';
+import { JdBucketSelectionRange } from '../modules/JdBucketSelectionRange';
 import { isTouchable } from '../utils';
 
 export default {

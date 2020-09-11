@@ -1,4 +1,4 @@
-import { BucketEventType, JdBucketRef, JdBucketContainerRef, JdBucketItemRef } from '../bucket';
+import { BucketEventType, JdBucketRef, JdBucketContainerRef, JdBucketItemRef } from '../';
 
 describe('JdBucketRef', () => {
   let bucketRef: JdBucketRef;

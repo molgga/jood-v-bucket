@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Subscription } from 'rxjs';
 import { defineComponent, computed, reactive, onMounted, onUnmounted, ref } from 'vue';
-import { provideJdBucketItemRef, useJdBucketContainerRef } from '../composables';
+import { provideJdBucketItemRef, useJdBucketContainerRef } from '../modules';
 import { isTouchable } from '../utils';
 
 export default defineComponent({

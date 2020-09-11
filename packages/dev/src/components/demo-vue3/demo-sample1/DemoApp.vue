@@ -10,19 +10,19 @@
           </div>
           <div class="body">
             <div class="body-opt">
-              <div>
+              <div class="box-opt">
                 <label class="box-label">
                   <input type="checkbox" v-model="receiverA1.useGhostBar" />
                   <span class="label">use indicate bar</span>
                 </label>
               </div>
-              <div>
+              <div class="box-opt">
                 <label class="box-label">
-                  <input type="checkbox" v-model="receiverA1" />
+                  <input type="checkbox" v-model="receiverA1.dropBeforeFilter" />
                   <span class="label">custom duplicate filter</span>
                 </label>
               </div>
-              <div>
+              <div class="box-opt">
                 <label class="box-label">
                   <span class="dt">max</span>
                   <input type="number" v-model="receiverA1.max" />
@@ -353,6 +353,9 @@ export default defineComponent({
     box-sizing: border-box;
     background-color: #ffffff;
   }
+}
+.box-opt {
+  padding: 10px 0;
 }
 .box-label {
   .dt {

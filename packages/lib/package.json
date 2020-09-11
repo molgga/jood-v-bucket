@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "rxjs": ">=6.5.5",
-    "vuedraggable": ">=2.23.2"
+    "vue-draggable-next": ">=1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",

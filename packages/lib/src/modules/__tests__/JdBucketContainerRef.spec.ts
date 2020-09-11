@@ -4,7 +4,7 @@ import {
   JdBucketContainerRef,
   JdBucketItemRef,
   BucketDropBeforeParams
-} from '../bucket';
+} from '../';
 import { delay } from '../../../tests/utils';
 
 describe('JdBucketContainerRef', () => {

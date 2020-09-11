@@ -221,6 +221,7 @@ export default defineComponent({
     border-right: 1px solid #e3e3e3;
     background-color: #ffffff;
     transition: transform 200ms;
+    z-index: 10;
   }
   .ly-body {
     display: flex;

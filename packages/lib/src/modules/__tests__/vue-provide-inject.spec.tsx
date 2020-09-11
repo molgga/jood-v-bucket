@@ -12,7 +12,7 @@ import {
   JdBucketItemRef,
   useJdBucketItemRef,
   provideJdBucketItemRef
-} from '../bucket';
+} from '../';
 
 describe('Vue provide&inject', () => {
   let wrapper: Wrapper<Vue> | null;

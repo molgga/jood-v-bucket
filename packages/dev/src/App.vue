@@ -1,19 +1,18 @@
 <template>
-  <div>
-    <demo-layout
-      title="@jood/v-bucket"
-      @goGithub="onGoGithub"
-      @goNpm="onGoNpm"
-      @goDoc="onGoDocument"
-    >
-      <template #menu>
-        <nav class="menu-wrap">
-          <demo-menu :menuList="menuList" />
-        </nav>
-      </template>
-      <router-view class="app-body" />
-    </demo-layout>
-  </div>
+  <demo-layout
+    class="layout"
+    title="@jood/v-bucket"
+    @goGithub="onGoGithub"
+    @goNpm="onGoNpm"
+    @goDoc="onGoDocument"
+  >
+    <template #menu>
+      <nav class="menu-wrap">
+        <demo-menu :menuList="menuList" />
+      </nav>
+    </template>
+    <router-view class="app-body" />
+  </demo-layout>
 </template>
 
 <script lang="ts">
@@ -55,32 +54,30 @@ export default {
   }
 };
 </script>
-
 <style>
+html,
 body {
+  margin: 0;
+  padding: 0;
   font-size: 15px;
+  height: 100%;
 }
-body .v-application a {
+body a {
   color: #2a9e64;
+}
+#app {
+  height: 100%;
 }
 </style>
 <style lang="scss" scoped>
-.app-title {
-  font-weight: bold;
-}
-.app-body-container {
-  align-items: flex-start;
-}
-.app-body {
-  display: flex;
-  width: 100%;
-  padding-top: 40px;
-  padding-bottom: 100px;
-  box-sizing: border-box;
-  align-self: stretch;
-}
-.app-bar {
-  box-shadow: none !important;
-  background-color: #41af7d !important;
+.layout {
+  ::v-deep(.ly-body) {
+    position: relative;
+    height: 100%;
+  }
+  ::v-deep(.ly-content) {
+    position: relative;
+    height: 100%;
+  }
 }
 </style>

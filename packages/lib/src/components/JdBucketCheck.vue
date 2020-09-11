@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
-import { useJdBucketItemRef } from '../composables';
+import { useJdBucketItemRef } from '../modules';
 
 export default defineComponent({
   name: 'JdBucketCheck',
