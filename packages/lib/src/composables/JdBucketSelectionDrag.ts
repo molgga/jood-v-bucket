@@ -1,6 +1,6 @@
 import { Subject, Observable } from 'rxjs';
 import { SelectionBound, SelectionBoundary } from './types';
-import { getTouchPosition, isTouchable } from '../../utils';
+import { getTouchPosition, isTouchable } from '../utils';
 
 export class JdBucketSelectionDrag {
   constructor() {}

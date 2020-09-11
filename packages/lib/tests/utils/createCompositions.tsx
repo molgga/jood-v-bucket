@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import { createLocalVue, shallowMount, mount, Wrapper } from '@vue/test-utils';
-import VueCompositionApi, { defineComponent } from '@vue/composition-api';
+import VueCompositionApi, { defineComponent } from 'vue';
 import { ComponentOptionsWithoutProps } from './types';
 
 /**

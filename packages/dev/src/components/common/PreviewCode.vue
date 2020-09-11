@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api';
+import { defineComponent, computed } from 'vue';
 import 'prismjs';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-bash';

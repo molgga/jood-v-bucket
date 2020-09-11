@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Wrapper } from '@vue/test-utils';
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent } from 'vue';
 import { compositionShallowMount, compositionMount } from '../../../tests/utils';
 import {
   useJdBucketRef,

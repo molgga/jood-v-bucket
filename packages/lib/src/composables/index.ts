@@ -1,4 +1,4 @@
-import { provide, inject } from '@vue/composition-api';
+import { provide, inject } from 'vue';
 import { IBucketRef, IBucketContainerRef, IBucketItemRef } from './types';
 import { JdBucketRef } from './JdBucketRef';
 import { JdBucketContainerRef } from './JdBucketContainerRef';

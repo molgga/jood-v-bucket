@@ -9,7 +9,7 @@ import {
   BucketDOMRectBound,
   BucketGroupNameType
 } from './types';
-import { createUid, isIntersect } from '../../utils';
+import { createUid, isIntersect } from '../utils';
 
 /**
  *

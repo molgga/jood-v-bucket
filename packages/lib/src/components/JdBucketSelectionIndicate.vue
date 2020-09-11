@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { defineComponent, onMounted, onUnmounted, reactive, computed } from '@vue/composition-api';
+import { defineComponent, onMounted, onUnmounted, reactive, computed } from 'vue';
 import {
   useJdBucketRef,
   BucketEvent,
@@ -23,10 +23,10 @@ import {
   IBucketContainerRef,
   BucketDragSelectionState,
   BucketRangeSelectionState
-} from '../../composables/bucket';
-import { JdBucketSelectionDrag } from '../../composables/bucket/JdBucketSelectionDrag';
-import { JdBucketSelectionRange } from '../../composables/bucket/JdBucketSelectionRange';
-import { isTouchable } from '../../utils';
+} from '../composables';
+import { JdBucketSelectionDrag } from '../composables/JdBucketSelectionDrag';
+import { JdBucketSelectionRange } from '../composables/JdBucketSelectionRange';
+import { isTouchable } from '../utils';
 
 export default defineComponent({
   setup() {

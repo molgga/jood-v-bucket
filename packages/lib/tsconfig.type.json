@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "module": "commonjs",
     "strict": true,
+    "strictNullChecks": false,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",

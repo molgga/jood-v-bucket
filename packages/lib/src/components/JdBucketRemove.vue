@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
-import { useJdBucketContainerRef, useJdBucketItemRef } from '../../composables/bucket';
+import { defineComponent } from 'vue';
+import { useJdBucketContainerRef, useJdBucketItemRef } from '../composables';
 
 export default defineComponent({
   name: 'JdBucketRemove',

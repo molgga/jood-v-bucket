@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
-import { useJdBucketItemRef } from '../../composables/bucket';
 import { Subscription } from 'rxjs';
+import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
+import { useJdBucketItemRef } from '../composables';
 
 export default defineComponent({
   name: 'JdBucketCheck',

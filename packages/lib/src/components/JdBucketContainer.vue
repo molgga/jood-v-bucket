@@ -39,15 +39,7 @@
 <script lang="ts">
 import draggable from 'vuedraggable';
 import { Subscription } from 'rxjs';
-import {
-  defineComponent,
-  computed,
-  onMounted,
-  onUnmounted,
-  reactive,
-  ref,
-  watch
-} from '@vue/composition-api';
+import { defineComponent, computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 import {
   provideJdBucketContainerRef,
   useJdBucketRef,
@@ -55,9 +47,9 @@ import {
   BucketEvent,
   BucketSortableEvent,
   BucketDragDrop
-} from '../../composables/bucket';
+} from '../composables';
+import { isTouchable } from '../utils';
 import JdBucketContainerIndicate from './JdBucketContainerIndicate.vue';
-import { isTouchable } from '../../utils';
 
 export default defineComponent({
   name: 'JdBucketContainer',
@@ -354,7 +346,7 @@ export default defineComponent({
   }
 
   &.use-ghost-bar.is-insertable {
-    ::v-deep .__jd-bucket-ghost {
+    ::v-deep(.__jd-bucket-ghost) {
       position: relative;
       overflow: hidden;
       padding: 0;

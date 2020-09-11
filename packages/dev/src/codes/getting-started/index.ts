@@ -101,7 +101,7 @@ export default {
     </div>
   </template>
   <script lang="ts">
-  import { reactive } from '@vue/composition-api';
+  import { reactive } from 'vue';
   import { JdBucketContainer, JdBucketItem } from '@jood/v-bucket';
   function createTestList(len = 5) {
     return Array.from(Array(len)).map((item, index) => {

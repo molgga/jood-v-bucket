@@ -1,25 +1,25 @@
 <template>
   <div class="page-view">
     <div class="panel">
-      <preview-code v-bind="Codes.install" />
+      <demo-preview-code v-bind="Codes.install" />
 
-      <panel-devider />
+      <demo-panel-devider />
 
-      <preview-code v-bind="Codes.main" />
+      <demo-preview-code v-bind="Codes.main" />
 
-      <panel-devider />
+      <demo-panel-devider />
 
-      <preview-code v-bind="Codes.app" />
+      <demo-preview-code v-bind="Codes.app" />
 
-      <panel-devider />
+      <demo-panel-devider />
 
-      <preview-code v-bind="Codes.someContainer" />
+      <demo-preview-code v-bind="Codes.someContainer" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent } from 'vue';
 import PreviewCode from '@/components/common/PreviewCode.vue';
 import PanelDevider from '@/components/common/PanelDevider.vue';
 import Codes from '@/codes/getting-started';

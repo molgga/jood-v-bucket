@@ -14,17 +14,10 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  computed,
-  reactive,
-  onMounted,
-  onUnmounted,
-  ref
-} from '@vue/composition-api';
-import { provideJdBucketItemRef, useJdBucketContainerRef } from '../../composables/bucket';
 import { Subscription } from 'rxjs';
-import { isTouchable } from '../../utils';
+import { defineComponent, computed, reactive, onMounted, onUnmounted, ref } from 'vue';
+import { provideJdBucketItemRef, useJdBucketContainerRef } from '../composables';
+import { isTouchable } from '../utils';
 
 export default defineComponent({
   name: 'JdBucketItem',

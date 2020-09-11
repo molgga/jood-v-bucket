@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
+import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdBucketContainerRef } from '@jood/v-bucket';
 
 export default defineComponent({

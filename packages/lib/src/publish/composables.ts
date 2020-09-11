@@ -1,1 +1,1 @@
-export * from '../composables/bucket';
+export * from '../composables';

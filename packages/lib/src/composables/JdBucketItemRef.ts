@@ -1,6 +1,6 @@
 import { Subject, Observable } from 'rxjs';
 import { IBucketItemRef, BucketDOMRectBound } from './types';
-import { createUid } from '../../utils';
+import { createUid } from '../utils';
 
 /**
  * 한개의 버킷 아이템

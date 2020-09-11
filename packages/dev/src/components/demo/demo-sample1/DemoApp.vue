@@ -90,7 +90,11 @@
                 :model="item"
                 :myIndex="index + 1"
               >
-                <sample-item :name="item.name" :description="item.description" :color="item.color" />
+                <sample-item
+                  :name="item.name"
+                  :description="item.description"
+                  :color="item.color"
+                />
               </custom-bucket-item>
             </jd-bucket-container>
           </div>
@@ -123,7 +127,11 @@
                 :model="item"
                 :myIndex="index + 1"
               >
-                <sample-item :name="item.name" :description="item.description" :color="item.color" />
+                <sample-item
+                  :name="item.name"
+                  :description="item.description"
+                  :color="item.color"
+                />
               </custom-bucket-item>
             </jd-bucket-container>
           </div>
@@ -139,7 +147,9 @@
           <div class="body">
             <div class="body-bucket">
               <div class="test-info">
-                <v-chip :ripple="false" :label="true" :small="true">multiple: true (rangeSelection)</v-chip>
+                <v-chip :ripple="false" :label="true" :small="true"
+                  >multiple: true (rangeSelection)</v-chip
+                >
               </div>
               <jd-bucket-container
                 class="sender-container"
@@ -204,7 +214,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted } from '@vue/composition-api';
+import { defineComponent, reactive, onMounted } from 'vue';
 import {
   provideJdBucketRef,
   JdBucketSelectionIndicate,
