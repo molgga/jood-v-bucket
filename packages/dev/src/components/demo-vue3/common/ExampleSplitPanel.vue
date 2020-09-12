@@ -72,10 +72,10 @@ export default defineComponent({
     .bside {
       width: 50% !important;
     }
-    ::v-deep .bucket-container {
+    ::v-deep(.bucket-container) {
       padding: 5px;
     }
-    ::v-deep .panel-wrap {
+    ::v-deep(.panel-wrap) {
       padding-left: 5px;
       padding-right: 5px;
       overflow: hidden;
