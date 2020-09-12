@@ -171,7 +171,7 @@ export default defineComponent({
     width: 100%;
     box-sizing: border-box;
     background-color: #ffffff;
-    ::v-deep .bucket-draggable {
+    ::v-deep(.bucket-draggable) {
       min-height: 200px;
     }
   }

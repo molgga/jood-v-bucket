@@ -37,11 +37,6 @@ export default defineComponent({
     width: 18px;
     height: 18px;
     box-shadow: none;
-    ::v-deep .v-btn__content .v-icon {
-      width: 14px;
-      height: 14px;
-      font-size: 14px;
-    }
   }
 }
 </style>
