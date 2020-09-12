@@ -1,9 +1,17 @@
 <template>
   <div class="custom-bucket-move">
-    <button class="btn" title="first" @click="onClickMove('first')">first</button>
-    <button class="btn" title="up" @click="onClickMove('up')">up</button>
-    <button class="btn" title="down" @click="onClickMove('down')">down</button>
-    <button class="btn" title="last" @click="onClickMove('last')">last</button>
+    <button class="action first" title="first" @click="onClickMove('first')">
+      <i class="icon material-icons">skip_next</i>
+    </button>
+    <button class="action up" title="up" @click="onClickMove('up')">
+      <i class="icon material-icons">play_arrow</i>
+    </button>
+    <button class="action down" title="down" @click="onClickMove('down')">
+      <i class="icon material-icons">play_arrow</i>
+    </button>
+    <button class="action last" title="last" @click="onClickMove('last')">
+      <i class="icon material-icons">skip_next</i>
+    </button>
   </div>
 </template>
 
@@ -38,21 +46,32 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .custom-bucket-move {
-  .first {
-    transform: rotate(90deg);
-  }
-  .last {
-    transform: rotate(-90deg);
-  }
   .action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin: 0 3px;
     width: 18px;
     height: 18px;
     box-shadow: none;
-    ::v-deep .v-btn__content .v-icon {
-      width: 14px;
-      height: 14px;
-      font-size: 14px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    .icon {
+      font-size: 12px;
+      color: #ffffff;
+    }
+    &.first {
+      transform: rotate(-90deg);
+    }
+    &.last {
+      transform: rotate(90deg);
+    }
+    &.up {
+      transform: rotate(-90deg);
+    }
+    &.down {
+      transform: rotate(90deg);
     }
   }
 }

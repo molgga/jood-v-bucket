@@ -21,7 +21,7 @@
         v-bind="safeDragOptions"
         :group="draggerState.group"
         :sort="draggerState.sort"
-        :list="list"
+        :list="modelValue"
         :disabled="state.isForceDisabled"
         :clone="onDraggerClone"
         @choose="onDraggerChoose"
@@ -58,12 +58,8 @@ export default defineComponent({
     draggable: VueDraggableNext,
     JdBucketContainerIndicate
   },
-  model: {
-    prop: 'list',
-    event: 'change'
-  },
   props: {
-    list: {
+    modelValue: {
       type: Array,
       default: (): any[] => []
     },
@@ -114,13 +110,12 @@ export default defineComponent({
     const bucketRef = useJdBucketRef();
     const containerRef = provideJdBucketContainerRef();
     containerRef.setGroupName(props.groupName || '');
-    containerRef.setList(props.list);
+    containerRef.setList(props.modelValue);
     containerRef.setReceiver(props.receiver);
     containerRef.setMultiple(props.multiple);
     containerRef.setMax(props.max);
     containerRef.setDropBefore(props.dropBefore);
     containerRef.setLazyStateChangeDelay(props.lazyChangeStateDelay);
-
     const bucketListener = new Subscription();
     const state = reactive({
       isDragChoose: false,
@@ -221,7 +216,7 @@ export default defineComponent({
       const { fromContainer, sortableEvent } = evt;
       const insertIndex = sortableEvent.newIndex;
       containerRef.mergeToDrop(insertIndex, fromContainer, ({ changeList }: any) => {
-        emit('change', changeList);
+        emit('update:modelValue', changeList);
       });
     };
 
@@ -279,7 +274,7 @@ export default defineComponent({
     };
 
     watch(
-      () => props.list,
+      () => props.modelValue,
       current => {
         containerRef.setList(current);
         forceIndicateUpdate();

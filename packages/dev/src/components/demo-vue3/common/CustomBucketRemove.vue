@@ -34,13 +34,17 @@ export default defineComponent({
 <style lang="scss" scoped>
 .custom-bucket-remove {
   .action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
     width: 18px;
     height: 18px;
     box-shadow: none;
-    ::v-deep .v-btn__content .v-icon {
-      width: 14px;
-      height: 14px;
-      font-size: 14px;
+    cursor: pointer;
+    .icon {
+      font-size: 12px;
+      color: #ffffff;
     }
   }
 }

@@ -69,8 +69,6 @@ export default defineComponent({
       // if (confirm('remove?')) {
       //   containerRef.removeByModel(itemRef.model);
       // }
-      console.log(33, itemRef.model);
-      console.log(44, containerRef);
       containerRef.removeByModel(itemRef.model);
     };
 

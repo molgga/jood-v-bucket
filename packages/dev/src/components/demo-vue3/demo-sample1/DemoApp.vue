@@ -13,13 +13,13 @@
               <div class="box-opt">
                 <label class="box-label">
                   <input type="checkbox" v-model="receiverA1.useGhostBar" />
-                  <span class="label">use indicate bar</span>
+                  <span class="label">useGhostBar</span>
                 </label>
               </div>
               <div class="box-opt">
                 <label class="box-label">
                   <input type="checkbox" v-model="receiverA1.dropBeforeFilter" />
-                  <span class="label">custom duplicate filter</span>
+                  <span class="label">custom dropBeforeFilter</span>
                 </label>
               </div>
               <div class="box-opt">
@@ -150,7 +150,9 @@
           </div>
           <div class="body">
             <div class="body-bucket">
-              <div class="test-info">multiple: true (rangeSelection)</div>
+              <div class="test-info">
+                multiple=true / rangeSelection=true
+              </div>
               <jd-bucket-container
                 class="sender-container"
                 v-model="senderA1.list"
@@ -182,7 +184,9 @@
           </div>
           <div class="body">
             <div class="body-bucket">
-              <div class="test-info">multiple: false</div>
+              <div class="test-info">
+                multiple=false
+              </div>
               <jd-bucket-container
                 class="sender-container"
                 v-model="senderB1.list"
@@ -326,8 +330,10 @@ export default defineComponent({
         flex: 1;
         min-width: 0;
         .test-info {
-          margin: 5px 0;
+          padding: 5px 0;
           text-align: right;
+          font-size: 13px;
+          color: #216dcf;
         }
       }
       .body-opt {

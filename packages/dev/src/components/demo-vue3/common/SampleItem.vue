@@ -1,11 +1,11 @@
 <template>
   <div class="sample-item">
     <div class="panel-avatar">
-      {{ viewState.avatar }}
+      <div class="avatar" :style="{ backgroundColor: color }">{{ viewState.avatar }}</div>
     </div>
     <div class="panel-info">
       <div class="name">
-        <span class="label">{{ viewState.name }}</span>
+        <span class="label" :style="{ color: color }">{{ viewState.name }}</span>
       </div>
       <div class="desc">
         <span class="label">{{ viewState.description }}</span>
@@ -50,6 +50,18 @@ export default defineComponent({
   align-items: center;
   .panel-avatar {
     width: 36px;
+    height: 36px;
+    .avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 50%;
+    }
   }
   .panel-info {
     flex: 1;
