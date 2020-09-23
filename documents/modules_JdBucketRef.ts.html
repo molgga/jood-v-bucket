@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>composables/bucket/JdBucketSelectionDrag.ts - Documentation</title>
+    <title>modules/JdBucketRef.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,7 +30,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">composables/bucket/JdBucketSelectionDrag.ts</h1>
+    <h1 class="page-title">modules/JdBucketRef.ts</h1>
     
 
     
@@ -41,194 +41,229 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { Subject, Observable } from 'rxjs';
-import { SelectionBound, SelectionBoundary } from './types';
-import { getTouchPosition, isTouchable } from '../../utils';
+import {
+  BucketEventType,
+  BucketDragStart,
+  BucketEvent,
+  BucketDragEnd,
+  IBucketContainerRef,
+  IBucketRef,
+  BucketDragChoose,
+  BucketRangeSelectionEvent
+} from './types';
 
-export class JdBucketSelectionDrag {
+const MouseupEventType = 'mouseup';
+const KeydownEventType = 'keydown';
+const KeyCodes = {
+  ESCAPE: 27
+};
+
+/**
+ * 버킷 최상위 관리
+ * @export
+ * @class JdBucketRef
+ * @implements {IBucketRef}
+ */
+export class JdBucketRef implements IBucketRef {
   constructor() {}
+  protected containerRefMap: Map&lt;string, IBucketContainerRef> = new Map();
+  protected subjectDragger: Subject&lt;BucketEvent> = new Subject();
+  protected subjectRangeSelection: Subject&lt;BucketRangeSelectionEvent> = new Subject();
+  protected draggingContainerRef: IBucketContainerRef | null = null;
+  protected fallbackIndicate: boolean = false;
 
-  static _instance: JdBucketSelectionDrag | null = null;
-  static getInstance() {
-    if (!JdBucketSelectionDrag._instance) {
-      JdBucketSelectionDrag._instance = new JdBucketSelectionDrag();
-    }
-    return JdBucketSelectionDrag._instance;
+  /**
+   * dnd 폴백을 사용하는지 여부
+   * @readonly
+   * @type {boolean}
+   */
+  get isFallbackIndicate(): boolean {
+    return this.fallbackIndicate;
   }
 
-  protected moveX = 0;
-  protected moveY = 0;
-  protected subjectBoundary: Subject&lt;SelectionBoundary> = new Subject();
-  protected subjectFlushed: Subject&lt;void> = new Subject();
+  /**
+   * dnd 폴백을 사용하는지 여부 지정.
+   * 폴백을 사용하지 않는 다면 브라우저에서 기본으로 지원하는 드래그(중인 이미지) UI 를 사용하고,
+   * 폴백을 사용한다면 DOM 을 이용하는데, draggable 에서 사용하는 폴백 DOM 을 invisible 처리하고,
+   * draggable 대신 드래그 중인 UI 를 표시한다.
+   * @param {boolean} is
+   */
+  setFallbackIndicate(is: boolean): void {
+    this.fallbackIndicate = !!is;
+  }
+
+  /**
+   *
+   * 등록된 버킷 컨테이너 맵.
+   * @returns {Map&lt;string, IBucketContainerRef>}
+   */
+  getContainerRefs(): Map&lt;string, IBucketContainerRef> {
+    return this.containerRefMap;
+  }
+
+  /**
+   * 옵저버: 드래그 상태
+   * @returns {Observable&lt;BucketEvent>}
+   */
+  observeDragger(): Observable&lt;BucketEvent> {
+    return this.subjectDragger.asObservable();
+  }
+
+  /**
+   * 옵저버: 영역 선택기 상태
+   * @returns {Observable&lt;BucketRangeSelectionEvent>}
+   */
+  observeRangeSelection(): Observable&lt;BucketRangeSelectionEvent> {
+    return this.subjectRangeSelection.asObservable();
+  }
+
+  /**
+   * 알림: 드래그 아이템 선택
+   * @param {BucketDragChoose} params
+   */
+  dispatchDragChoose(params: BucketDragChoose): void {
+    const { fromContainer, sortableEvent } = params;
+    this.subjectDragger.next({
+      type: BucketEventType.DRAG_CHOOSE,
+      fromContainer,
+      sortableEvent
+    });
+  }
+
+  /**
+   * 알림: 드래그 아이템 선택 해제
+   * @param {BucketDragChoose} params
+   */
+  dispatchDragUnchoose(params: BucketDragChoose): void {
+    const { sortableEvent } = params;
+    this.subjectDragger.next({
+      type: BucketEventType.DRAG_UNCHOOSE,
+      sortableEvent
+    });
+  }
+
+  /**
+   * 알림: 드래그 시작
+   * @param {BucketDragStart} params
+   */
+  dispatchDragStart(params: BucketDragStart): void {
+    const { fromContainer, sortableEvent } = params;
+    this.draggingContainerRef = fromContainer;
+    this.subjectDragger.next({
+      type: BucketEventType.DRAG_START,
+      sortableEvent,
+      fromContainer
+    });
+    this.removeKeyboardListener();
+    this.addKeyboardListener();
+  }
+
+  /**
+   * 알림: 드래그 종료
+   * @param {BucketDragEnd} params
+   */
+  dispatchDragEnd(params: BucketDragEnd): void {
+    this.removeKeyboardListener();
+    const { toContainer, sortableEvent } = params;
+    const fromContainer = this.draggingContainerRef;
+    this.subjectDragger.next({
+      type: BucketEventType.DRAG_END,
+      sortableEvent,
+      fromContainer,
+      toContainer
+    });
+    toContainer.dispatchDropped({
+      sortableEvent,
+      fromContainer: this.draggingContainerRef,
+      toContainer: toContainer
+    });
+    this.draggingContainerRef = null;
+  }
+
+  /**
+   * 알림: 영역 선택기 시작
+   * @param {BucketRangeSelectionEvent} params
+   */
+  dispatchRangeSelectionStart(params: BucketRangeSelectionEvent): void {
+    this.subjectRangeSelection.next(params);
+  }
+
+  /**
+   * 버킷 컨테이너 등록
+   * @param {IBucketContainerRef} containerRef
+   */
+  joinContainerRef(containerRef: IBucketContainerRef): void {
+    this.containerRefMap.set(containerRef.getUid(), containerRef);
+  }
+
+  /**
+   * 버킷 컨테이너 등록 해제
+   * @param {IBucketContainerRef} containerRef
+   */
+  unjoinContainerRef(containerRef: IBucketContainerRef): void {
+    this.containerRefMap.delete(containerRef.getUid());
+  }
+
+  /**
+   * 해당 element(DOM) 가 속한 버킷 컨테이너 찾기
+   * @param {Element} element
+   * @returns {IBucketContainerRef}
+   */
+  findContainerRefByElement(element: Element): IBucketContainerRef {
+    const finded = Array.from(this.containerRefMap.values()).find((ref: IBucketContainerRef) => {
+      return ref.elContainer === element;
+    }) as IBucketContainerRef;
+    return finded;
+  }
 
   /**
    * document
    * @returns {Document}
    */
-  getDocument(): Document {
+  protected getDocument(): Document {
     return window.document;
   }
 
   /**
-   * 터치 분기 처리
+   * 키보드 이벤트 핸들러
    * @protected
    */
-  protected touchable(): { is: boolean; EventType: { [key: string]: any } } {
-    const is = isTouchable();
-    return {
-      is,
-      EventType: {
-        UP: is ? 'touchup' : 'mouseup',
-        MOVE: is ? 'touchmove' : 'mousemove'
-      }
-    };
-  }
-
-  /**
-   * document mousemove 이벤트 핸들러.
-   * @protected
-   */
-  protected handleSelectionMove = (evt: MouseEvent | TouchEvent) => {
-    if (!this.touchable().is) {
-      evt.preventDefault();
+  protected handleKeyboard = (evt: KeyboardEvent) => {
+    if (evt.keyCode === KeyCodes.ESCAPE) {
+      this.cancel();
     }
-    const { x = 0, y = 0 } = getTouchPosition(evt) || {};
-    this.moveX = x;
-    this.moveY = y;
-    this.updateBoundary();
   };
 
   /**
-   * document mouseup 이벤트 핸들러.
+   * 키보드 이벤트 핸들러 등록
    * @protected
    */
-  protected handleSelectionUp = () => {
-    this.endSelection();
-  };
-
-  /**
-   * document 핸들러 등록
-   * @protected
-   */
-  protected addSelectionHandler() {
+  protected addKeyboardListener() {
     const doc = this.getDocument();
-    const eventType = this.touchable().EventType;
-    doc.addEventListener(eventType.MOVE, this.handleSelectionMove);
-    doc.addEventListener(eventType.UP, this.handleSelectionUp);
-  }
-
-  /**
-   * document 핸들러 제거
-   * @protected
-   */
-  protected removeSelectionHandler() {
-    const doc = this.getDocument();
-    const eventType = this.touchable().EventType;
-    doc.removeEventListener(eventType.MOVE, this.handleSelectionMove);
-    doc.removeEventListener(eventType.UP, this.handleSelectionUp);
-  }
-
-  /**
-   * 옵저버: 바운더리 영역
-   * @returns {Observable&lt;SelectionBoundary>}
-   */
-  observeBoundary(): Observable&lt;SelectionBoundary> {
-    return this.subjectBoundary.asObservable();
-  }
-
-  /**
-   * 옵저버: 바운더리 선택 해제
-   * @returns {Observable&lt;void>}
-   */
-  observeFlushed(): Observable&lt;void> {
-    return this.subjectFlushed.asObservable();
-  }
-
-  /**
-   * 알림: 바운더리 영역 변경.
-   * @param {SelectionBoundary} boundary
-   */
-  dispatchBoundary(boundary: SelectionBoundary): void {
-    this.subjectBoundary.next(boundary);
-  }
-
-  /**
-   * 알림: 바운더리 영역 해제.
-   */
-  dispatchFlushed(): void {
-    this.subjectFlushed.next();
-  }
-
-  /**
-   * 바운더리 영역 변경
-   */
-  updateBoundary(): void {
-    const top = this.moveY;
-    const left = this.moveX;
-    this.dispatchBoundary({
-      x: left,
-      y: top,
-      w: 0,
-      h: 0
-    });
-  }
-
-  /**
-   * 셀렉션 시작.
-   * @param {SelectionBound} bound
-   */
-  startSelection(bound: SelectionBound): void {
-    const { x = 0, y = 0 } = bound;
-    this.moveX = x;
-    this.moveY = y;
-    this.updateBoundary();
-    this.removeSelectionHandler();
-    this.addSelectionHandler();
-  }
-
-  /**
-   * 셀렉션 종료.
-   */
-  endSelection(): void {
-    this.moveX = 0;
-    this.moveY = 0;
-    this.flushSelection();
-  }
-
-  /**
-   * 셀렉션 해제.
-   */
-  flushSelection(): void {
-    this.dispatchFlushed();
-    this.removeSelectionHandler();
-  }
-
-  /**
-   * 해제.
-   */
-  dispose(): void {
-    try {
-      this.flushSelection();
-      // ...
-    } catch (err) {
-      console.error(err);
+    if (doc) {
+      doc.addEventListener(KeydownEventType, this.handleKeyboard);
     }
   }
 
   /**
-   * 파기
+   * 키보드 이벤트 핸들러 제거
+   * @protected
    */
-  destroy(): void {
-    try {
-      this.flushSelection();
-      if (this.subjectBoundary) {
-        this.subjectBoundary.unsubscribe();
-      }
-      if (this.subjectFlushed) {
-        this.subjectFlushed.unsubscribe();
-      }
-      // ...
-    } catch (err) {
-      console.error(err);
+  protected removeKeyboardListener() {
+    const doc = this.getDocument();
+    if (doc) {
+      doc.removeEventListener(KeydownEventType, this.handleKeyboard);
+    }
+  }
+
+  /**
+   * 드래그 중 취소
+   */
+  cancel() {
+    this.removeKeyboardListener();
+    if (this.draggingContainerRef) {
+      this.draggingContainerRef.flushDragItem();
+      document.dispatchEvent(new MouseEvent(MouseupEventType));
     }
   }
 }
@@ -244,7 +279,7 @@ export class JdBucketSelectionDrag {
 <br class="clear">
 
 <footer>
-    Documentation generated at Sat Aug 29 2020 11:12:07 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Wed Sep 23 2020 08:21:19 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>
