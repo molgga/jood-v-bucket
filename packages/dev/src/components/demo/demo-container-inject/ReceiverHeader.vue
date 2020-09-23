@@ -15,13 +15,14 @@
       text-color="#ffffff"
       close
       @click:close="onRemoveItem(model)"
-    >{{ model.name }}</v-chip>
+      >{{ model.name }}</v-chip
+    >
   </div>
 </template>
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { defineComponent, reactive, onMounted, onUnmounted, computed } from '@vue/composition-api';
+import { defineComponent, reactive, onMounted, onUnmounted, computed } from 'vue';
 import { useJdBucketContainerRef } from '@jood/v-bucket';
 
 export default defineComponent({

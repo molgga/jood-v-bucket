@@ -75,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent } from 'vue';
 import { useJdBucketItemRef } from '@jood/v-bucket';
 
 export default defineComponent({
@@ -116,11 +116,6 @@ export default defineComponent({
     width: 18px;
     height: 18px;
     box-shadow: none;
-    ::v-deep .v-btn__content .v-icon {
-      width: 14px;
-      height: 14px;
-      font-size: 14px;
-    }
   }
 }
 </style>

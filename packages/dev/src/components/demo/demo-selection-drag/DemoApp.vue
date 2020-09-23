@@ -84,7 +84,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted } from '@vue/composition-api';
+import { defineComponent, reactive, onMounted } from 'vue';
 import {
   provideJdBucketRef,
   JdBucketSelectionIndicate,
@@ -177,7 +177,7 @@ export default defineComponent({
     width: 100%;
     box-sizing: border-box;
     background-color: #ffffff;
-    ::v-deep .bucket-draggable {
+    ::v-deep(.bucket-draggable) {
       min-height: 200px;
     }
   }

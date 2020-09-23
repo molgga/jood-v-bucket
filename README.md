@@ -3,8 +3,10 @@
 It provides model management function between containers by drag & drop. \
 The goal is to provide a foundation for data communication and progressive control between component groups by drag & drop.
 
-This is a dedicated package for Vue using Vue, composition-api, rxjs, draggable.
-(When Vue3 is supported, the composition-api dependency will be removed.)
+This is a dedicated package for Vue. \
+
+- \>=0.3.x : with Vue3
+- ~~^0.2.x : with @vue/composition-api~~
 
 > __[Demo](https://molgga.github.io/jood-v-bucket)__
 | __[Demo source code](https://github.com/molgga/jood-v-bucket/tree/master/packages/dev/src/components/example)__

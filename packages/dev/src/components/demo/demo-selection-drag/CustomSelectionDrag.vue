@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, watchEffect } from '@vue/composition-api';
+import { defineComponent, computed, watchEffect } from 'vue';
 import { BucketDragSelectionState } from '@jood/v-bucket';
 
 interface IProps {

@@ -1,17 +1,18 @@
 <template>
   <div class="some-item">
     <div class="name">{{ viewState.name }}</div>
-    <div class="desc">{{ viewState.description}}</div>
+    <div class="desc">{{ viewState.description }}</div>
     <template v-if="viewState.isOverflow">
-      <div
-        class="display-alert"
-      >{{ expectDisplayMax }}개 까지만 서비스에 노출 됩니다. 위 컨텐츠가 노출 불가능 상태가 되면 순서대로 노출 됩니다.</div>
+      <div class="display-alert">
+        {{ expectDisplayMax }}개 까지만 서비스에 노출 됩니다. 위 컨텐츠가 노출 불가능 상태가 되면
+        순서대로 노출 됩니다.
+      </div>
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api';
+import { defineComponent, computed } from 'vue';
 import { useJdBucketItemRef } from '@jood/v-bucket';
 
 export default defineComponent({
