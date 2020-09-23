@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-bucket",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "main": "dist/v-bucket.common.js",
   "types": "dist/types/index.d.ts",
   "module": "src/index.ts",
@@ -20,7 +20,7 @@
     "generate": "npm run build && npm run declaration"
   },
   "peerDependencies": {
-    "vue": ">=3.0.0-0"
+    "vue": ">=3.0.0"
   },
   "dependencies": {
     "rxjs": ">=6.5.5",
@@ -70,6 +70,8 @@
     "javascript",
     "typescript",
     "vue",
+    "vue3",
+    "vue3.0",
     "draggable",
     "dragdrop",
     "transfer",

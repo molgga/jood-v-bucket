@@ -61,9 +61,7 @@ export default defineComponent({
         containerRef.addDragItem(itemRef);
       } else {
         containerRef.flushDragItem();
-        if (!state.isPressBeforeSelected) {
-          containerRef.setDragItem(itemRef);
-        }
+        containerRef.setDragItem(itemRef);
       }
     };
 
