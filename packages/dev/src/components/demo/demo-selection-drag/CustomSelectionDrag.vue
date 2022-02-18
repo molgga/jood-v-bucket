@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, watchEffect } from 'vue';
-import { BucketDragSelectionState } from '@jood/v-bucket';
+import { BucketDragSelectionState, IBucketItemRef } from '@jood/v-bucket';
 
 interface IProps {
   dragState: BucketDragSelectionState;
@@ -32,34 +32,35 @@ export default defineComponent({
   props: {
     dragState: {
       type: Object,
-      default: () => ({
-        visible: false,
-        count: 0,
-        style: null,
-        itemRefs: []
-      })
-    }
+      default: () =>
+        ({
+          visible: false,
+          count: 0,
+          style: null,
+          itemRefs: [],
+        } as BucketDragSelectionState),
+    },
   },
 
-  setup(props: IProps) {
+  setup(props) {
     const isVisible = computed(() => props.dragState.visible);
     const positionStyle = computed(() => props.dragState.style);
     const previewBox = computed(() => {
       const itemRefs = props.dragState.itemRefs;
-      const list = itemRefs.map(itemRef => itemRef.model);
+      const list = itemRefs.map((itemRef: IBucketItemRef) => itemRef.model);
       const max = 3;
       return {
         list: list.slice(-max),
-        count: props.dragState.count
+        count: props.dragState.count,
       };
     });
 
     return {
       isVisible,
       positionStyle,
-      previewBox
+      previewBox,
     };
-  }
+  },
 });
 </script>
 

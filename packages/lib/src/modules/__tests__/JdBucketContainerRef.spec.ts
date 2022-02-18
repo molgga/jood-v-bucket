@@ -3,19 +3,20 @@ import {
   JdBucketRef,
   JdBucketContainerRef,
   JdBucketItemRef,
-  BucketDropBeforeParams
+  BucketDropBeforeParams,
 } from '../';
-import { delay } from '../../../tests/utils';
 
 describe('JdBucketContainerRef', () => {
   let bucketRef: JdBucketRef;
   let containerRef: JdBucketContainerRef;
   beforeEach(() => {
+    jest.useFakeTimers();
     bucketRef = new JdBucketRef();
     containerRef = new JdBucketContainerRef();
   });
 
   afterEach(() => {
+    jest.useRealTimers();
     if (containerRef) {
       containerRef.destroy();
     }
@@ -102,7 +103,7 @@ describe('JdBucketContainerRef', () => {
     containerRef.setMax('ABC' as any);
     expect(containerRef.max).toBe(-1);
   });
-  
+
   test('isMaximum', () => {
     containerRef.setList([{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]);
     containerRef.setMax(6);
@@ -162,7 +163,7 @@ describe('JdBucketContainerRef', () => {
     containerListener.unsubscribe();
   });
 
-  test('observeChangeState, state change lazy', async jestDone => {
+  test('observeChangeState, state change lazy', () => {
     const handler = jest.fn();
     const containerListener = containerRef.observeChangeState().subscribe(handler);
     containerRef.setLazyStateChangeDelay(10);
@@ -171,13 +172,12 @@ describe('JdBucketContainerRef', () => {
     containerRef.setMax(99);
     containerRef.setReceiver(true);
     containerRef.setMultiple(false);
-    await delay(50);
+    jest.advanceTimersByTime(50);
     expect(handler.mock.calls.length).toBe(1);
     containerListener.unsubscribe();
-    jestDone();
   });
 
-  test('observeChangeState, state change lazy 2', async jestDone => {
+  test('observeChangeState, state change lazy 2', () => {
     const handler = jest.fn();
     const containerListener = containerRef.observeChangeState().subscribe(handler);
     containerRef.setLazyStateChangeDelay(undefined as any);
@@ -188,7 +188,6 @@ describe('JdBucketContainerRef', () => {
     containerRef.setMultiple(false);
     expect(handler.mock.calls.length).toBe(5);
     containerListener.unsubscribe();
-    jestDone();
   });
 
   test('joinItemRef, unjoinItemRef, getItemRefs', () => {
@@ -285,16 +284,16 @@ describe('JdBucketContainerRef', () => {
     containerRef.joinItemRef(itemRef2);
     containerRef.joinItemRef(itemRef3);
     jest.spyOn(itemRef1, 'getElBound').mockImplementation(() => {
-      return { x: 0, y: 0, width: 50, height:50};
+      return { x: 0, y: 0, width: 50, height: 50 };
     });
     jest.spyOn(itemRef2, 'getElBound').mockImplementation(() => {
-      return { x: 99, y: 99, width: 50, height:50};
+      return { x: 99, y: 99, width: 50, height: 50 };
     });
     jest.spyOn(itemRef3, 'getElBound').mockImplementation(() => {
-      return { x: 101, y: 101, width: 50, height:50};
+      return { x: 101, y: 101, width: 50, height: 50 };
     });
     expect(containerRef.getDragItems().length).toBe(0);
-    containerRef.addDragItemToBoundary({ x:10, y: 10, w: 90, h: 90 });
+    containerRef.addDragItemToBoundary({ x: 10, y: 10, w: 90, h: 90 });
     expect(containerRef.getDragItems().length).toBe(2);
   });
 
@@ -327,7 +326,7 @@ describe('JdBucketContainerRef', () => {
     expect(containerRef.createCloneModel()).not.toBeNull();
   });
 
-  test('mergeToDrop', async jestDone => {
+  test('mergeToDrop', async () => {
     const senderList: any[] = [{ id: 101 }, { id: 102 }, { id: 103 }];
     const senderContainer = new JdBucketContainerRef();
     const senderItem1 = new JdBucketItemRef();
@@ -353,10 +352,9 @@ describe('JdBucketContainerRef', () => {
     expect(mergeChangeEmitter.mock.calls.length).toBe(1);
     expect(senderContainer.getDragItems().length).toBe(0);
     expect(containerRef.getList()).toEqual([{ id: 201 }, { id: 101 }, { id: 102 }, { id: 202 }]);
-    jestDone();
   });
 
-  test('mergeToDrop dropBefore confirm true', async jestDone => {
+  test('mergeToDrop dropBefore confirm true', async () => {
     const senderList: any[] = [{ id: 101 }, { id: 102 }, { id: 103 }];
     const senderContainer = new JdBucketContainerRef();
     const senderItem1 = new JdBucketItemRef();
@@ -386,10 +384,9 @@ describe('JdBucketContainerRef', () => {
     expect(mergeChangeEmitter.mock.calls.length).toBe(2); // dropBefore 가 물려있는 경우 dropBefore 를 호출하기 전/후 2번 호출 된다
     expect(senderContainer.getDragItems().length).toBe(0);
     expect(containerRef.getList()).toEqual([{ id: 201 }, { id: 101 }, { id: 102 }, { id: 202 }]); // 변경 됨
-    jestDone();
   });
 
-  test('mergeToDrop dropBefore confirm false', async jestDone => {
+  test('mergeToDrop dropBefore confirm false', async () => {
     const senderList: any[] = [{ id: 101 }, { id: 102 }, { id: 103 }];
     const senderContainer = new JdBucketContainerRef();
     const senderItem1 = new JdBucketItemRef();
@@ -419,10 +416,9 @@ describe('JdBucketContainerRef', () => {
     expect(mergeChangeEmitter.mock.calls.length).toBe(1);
     expect(senderContainer.getDragItems().length).toBe(0);
     expect(containerRef.getList()).toEqual([{ id: 201 }, { id: 202 }]); // 변경 되지 않음
-    jestDone();
   });
 
-  test('mergeToDrop dropBefore filter list', async jestDone => {
+  test('mergeToDrop dropBefore filter list', async () => {
     const senderList: any[] = [{ id: 101 }, { id: 102 }, { id: 103 }];
     const senderContainer = new JdBucketContainerRef();
     const senderItem1 = new JdBucketItemRef();
@@ -440,8 +436,8 @@ describe('JdBucketContainerRef', () => {
     const mergeChangeEmitter = jest.fn();
     const intercepDropBefore = (params: BucketDropBeforeParams) => {
       const { itemRefs } = params;
-      const filterRefs = itemRefs.filter(itemRef => 101 === itemRef.model.id);
-      return filterRefs.map(itemRef => itemRef.model);
+      const filterRefs = itemRefs.filter((itemRef) => 101 === itemRef.model.id);
+      return filterRefs.map((itemRef) => itemRef.model);
     };
 
     const receiverList: any[] = [{ id: 201 }, { id: 202 }];
@@ -454,6 +450,5 @@ describe('JdBucketContainerRef', () => {
     expect(mergeChangeEmitter.mock.calls.length).toBe(2);
     expect(senderContainer.getDragItems().length).toBe(0);
     expect(containerRef.getList()).toEqual([{ id: 201 }, { id: 101 }, { id: 202 }]);
-    jestDone();
   });
 });

@@ -89,7 +89,7 @@ export class JdBucketItemRef<TM = any> implements IBucketItemRef<TM> {
       x: rect.x || rect.left || 0,
       y: rect.y || rect.top || 0,
       width: rect.width || 0,
-      height: rect.height || 0
+      height: rect.height || 0,
     };
   }
 
@@ -105,7 +105,7 @@ export class JdBucketItemRef<TM = any> implements IBucketItemRef<TM> {
    * 알림: 아이템 상태 변경.
    */
   dispatchChangeState(): void {
-    this.subjectChangeState.next();
+    this.subjectChangeState.next({});
   }
 
   /**
