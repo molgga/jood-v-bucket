@@ -28,8 +28,3 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
 
-      - name: Github pages publish
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-set-runners-access-token-github_token
-          publish_dir: './docs'
