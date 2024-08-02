@@ -63,6 +63,9 @@ export default defineComponent({
     box-sizing: border-box;
     border-left: 1px solid #e0e0e0;
   }
+  ::v-deep(.bucket-container) {
+    user-select: none;
+  }
 }
 @media all and (max-width: 768px) {
   .example-full-panel {
