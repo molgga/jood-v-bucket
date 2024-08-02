@@ -16,7 +16,7 @@
     "ci:bootstrap": "yarn install --production=false",
     "ci:build": "npm run generate",
     "ci:test": "yarn workspace @jood/v-bucket test",
-    "ci:deploy-before": "npm run ci:build && npm run symlink && npm run page:clear && npm run page:expose",
+    "ci:deploy-before": "npm run ci:build && npm run symlink",
     "ci:deploy-pre-test": "npm run ci:test && npm run ci:deploy-before"
   }
 }
